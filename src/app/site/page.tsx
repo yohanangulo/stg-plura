@@ -6,7 +6,11 @@ import clsx from 'clsx'
 import { Check } from 'lucide-react'
 import Link from 'next/link'
 
+import { useTranslations } from 'next-intl'
+
 export default function Home() {
+  const t = useTranslations('Index')
+
   return (
     <>
       <section className="h-full w-full pt-36 relative flex items-center flex-col">
@@ -27,6 +31,7 @@ export default function Home() {
         </div>
       </section>
       <section className="flex flex-col justify-center items-center gap-4 md:mt-20 mt-40">
+        <h2 className="text-4xl text-center">{t('Index')}</h2>
         <h2 className="text-4xl text-center">Choose what fits you right</h2>
         <p className="text-muted-foreground text-center">
           Our straightforward pricing plans are tailored to meet your needs. If you are not <br />

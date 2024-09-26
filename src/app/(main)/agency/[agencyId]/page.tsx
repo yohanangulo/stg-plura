@@ -73,8 +73,9 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
 
   return (
     <div className="relative h-full">
-      {!agencyDetails.connectAccountId && (
-        <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
+      {/* // TODO: */}
+      {/* {!agencyDetails.connectAccountId && (
+        <div className=" absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
           <Card>
             <CardHeader>
               <CardTitle>Connect Your Stripe</CardTitle>
@@ -89,7 +90,7 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
             </CardHeader>
           </Card>
         </div>
-      )}
+      )} */}
       <h1 className="text-4xl">Dashboard</h1>
       <Separator className=" my-6" />
       <div className="flex flex-col gap-4 pb-6">
