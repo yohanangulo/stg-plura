@@ -74,7 +74,8 @@ B (255 */
     --border: 220 50% 13.2%;
     --input: 220 50% 13.2%;
 
-    --primary: 220 100% 44%;
+    /* --primary: 220 100% 44%; */
+    --primary: 15 100% 62%;
     --primary-foreground: 220 10% 97.2%;
 
     --secondary: 220 50% 13.2%;
