@@ -33,6 +33,7 @@ import React, { Dispatch, SetStateAction, useMemo } from 'react'
 import CustomModal from '@/components/global/custom-modal'
 import TicketForm from '@/components/forms/ticket-form'
 import PipelineTicket from './pipeline-ticket'
+import { useTranslations } from 'next-intl'
 
 interface PipelaneLaneProps {
   setAllTickets: Dispatch<SetStateAction<TicketWithTags>>
@@ -53,6 +54,8 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
   allTickets,
   index,
 }) => {
+  const t = useTranslations()
+
   const { setOpen } = useModal()
   const router = useRouter()
 
@@ -164,37 +167,34 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
                   </Droppable>
 
                   <DropdownMenuContent>
-                    <DropdownMenuLabel>Options</DropdownMenuLabel>
+                    <DropdownMenuLabel>{t('options')}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <AlertDialogTrigger>
                       <DropdownMenuItem className="flex items-center gap-2">
                         <Trash size={15} />
-                        Delete
+                        {t('delete')}
                       </DropdownMenuItem>
                     </AlertDialogTrigger>
 
                     <DropdownMenuItem className="flex items-center gap-2" onClick={handleEditLane}>
                       <Edit size={15} />
-                      Edit
+                      {t('edit')}
                     </DropdownMenuItem>
                     <DropdownMenuItem className="flex items-center gap-2" onClick={handleCreateTicket}>
                       <PlusCircleIcon size={15} />
-                      Create Ticket
+                      {t('createTicket')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </div>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete your account and remove your data from our
-                      servers.
-                    </AlertDialogDescription>
+                    <AlertDialogTitle>{t('areYouAbsolutelySure')}</AlertDialogTitle>
+                    <AlertDialogDescription>{t('deleteLaneConfigMessage')}</AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter className="flex items-center">
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                     <AlertDialogAction className="bg-destructive" onClick={handleDeleteLane}>
-                      Continue
+                      {t('continue')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

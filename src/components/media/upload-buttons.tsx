@@ -5,12 +5,15 @@ import React from 'react'
 import { Button } from '../ui/button'
 import CustomModal from '../global/custom-modal'
 import UploadMediaForm from '../forms/upload-media'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   subaccountId: string
 }
 
 const MediaUploadButton = ({ subaccountId }: Props) => {
+  const t = useTranslations()
+
   const { isOpen, setOpen, setClose } = useModal()
 
   return (
@@ -23,7 +26,7 @@ const MediaUploadButton = ({ subaccountId }: Props) => {
         )
       }}
     >
-      Upload
+      {t('upload')}
     </Button>
   )
 }

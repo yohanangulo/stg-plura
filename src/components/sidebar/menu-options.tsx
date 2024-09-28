@@ -17,6 +17,7 @@ import CustomModal from '../global/custom-modal'
 import SubAccountDetails from '../forms/subaccount-details'
 import { Separator } from '../ui/separator'
 import { icons } from '@/lib/constants'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   defaultOpen?: boolean
@@ -29,6 +30,8 @@ type Props = {
 }
 
 const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, defaultOpen }: Props) => {
+  const t = useTranslations()
+
   const { setOpen } = useModal()
   const [isMounted, setIsMounted] = useState(false)
 
@@ -79,7 +82,7 @@ const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, 
               <Command className="rounded-lg">
                 <CommandInput placeholder="Search Accounts..." />
                 <CommandList className="pb-16">
-                  <CommandEmpty> No results found</CommandEmpty>
+                  <CommandEmpty>{t('noResultsFound')}</CommandEmpty>
                   {(user?.role === 'AGENCY_OWNER' || user?.role === 'AGENCY_ADMIN') && user?.Agency && (
                     <CommandGroup heading="Agency">
                       <CommandItem className="!bg-transparent my-2 text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
@@ -181,20 +184,20 @@ const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, 
                       }}
                     >
                       <PlusCircleIcon size={15} />
-                      Create Sub Account
+                      {t('createSubAccount')}
                     </Button>
                   </SheetClose>
                 )}
               </Command>
             </PopoverContent>
           </Popover>
-          <p className="text-muted-foreground text-xs mb-2">MENU LINKS</p>
+          <p className="text-muted-foreground text-xs mb-2">{t('menuLinks')}</p>
           <Separator className="mb-4" />
           <nav className="relative">
             <Command className="rounded-lg overflow-visible bg-transparent">
               <CommandInput placeholder="Search..." />
               <CommandList className="py-4 overflow-visible">
-                <CommandEmpty>No Results Found</CommandEmpty>
+                <CommandEmpty>{t('noRusultsFound')}</CommandEmpty>
                 <CommandGroup className="overflow-visible">
                   {sidebarOpt.map(sidebarOptions => {
                     let val
@@ -209,7 +212,7 @@ const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, 
                           className="flex items-center gap-2 hover:bg-transparent rounded-md transition-all md:w-full w-[320px]"
                         >
                           {val}
-                          <span>{sidebarOptions.name}</span>
+                          <span>{t(sidebarOptions.name)}</span>
                         </Link>
                       </CommandItem>
                     )

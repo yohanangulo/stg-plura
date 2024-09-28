@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react'
 import { z } from 'zod'
 import { useToast } from '../ui/use-toast'
@@ -11,6 +12,7 @@ import { createMedia, saveActivityLogsNotification } from '@/lib/queries'
 import { Input } from '../ui/input'
 import FileUpload from '../global/file-upload'
 import { Button } from '../ui/button'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   subaccountId: string
@@ -22,6 +24,8 @@ const formSchema = z.object({
 })
 
 const UploadMediaForm = ({ subaccountId }: Props) => {
+  const t = useTranslations()
+
   const { toast } = useToast()
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
@@ -57,8 +61,8 @@ const UploadMediaForm = ({ subaccountId }: Props) => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Media Information</CardTitle>
-        <CardDescription>Please enter the details for your file</CardDescription>
+        <CardTitle>{t('mediaInformation')}</CardTitle>
+        <CardDescription>{t('pleaseEnterFileDetails')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -68,7 +72,7 @@ const UploadMediaForm = ({ subaccountId }: Props) => {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>File Name</FormLabel>
+                  <FormLabel>{t('fileName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Your agency name" {...field} />
                   </FormControl>
@@ -82,7 +86,7 @@ const UploadMediaForm = ({ subaccountId }: Props) => {
               name="link"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Media File</FormLabel>
+                  <FormLabel>{t('mediaFile')}</FormLabel>
                   <FormControl>
                     <FileUpload apiEndpoint="subaccountLogo" value={field.value} onChange={field.onChange} />
                   </FormControl>
@@ -91,7 +95,7 @@ const UploadMediaForm = ({ subaccountId }: Props) => {
               )}
             />
             <Button type="submit" className="mt-4">
-              Upload Media
+              {t('uploadMedia')}
             </Button>
           </form>
         </Form>

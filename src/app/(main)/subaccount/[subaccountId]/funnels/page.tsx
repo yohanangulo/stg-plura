@@ -5,8 +5,11 @@ import { Plus } from 'lucide-react'
 import { columns } from './columns'
 import FunnelForm from '@/components/forms/funnel-form'
 import BlurPage from '@/components/global/blur-page'
+import { getTranslations } from 'next-intl/server'
 
 const Funnels = async ({ params }: { params: { subaccountId: string } }) => {
+  const t = await getTranslations()
+
   const funnels = await getFunnels(params.subaccountId)
   if (!funnels) return null
 
@@ -16,7 +19,7 @@ const Funnels = async ({ params }: { params: { subaccountId: string } }) => {
         actionButtonText={
           <>
             <Plus size={15} />
-            Create Funnel
+            {t('createFunnel')}
           </>
         }
         modalChildren={<FunnelForm subAccountId={params.subaccountId}></FunnelForm>}

@@ -23,20 +23,20 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale()
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages()
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${font.className} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <ModalProvider>
-            {children}
-            <Toaster />
-            <SonnerToaster />
-          </ModalProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <ModalProvider>
+              {children}
+              <Toaster />
+              <SonnerToaster />
+            </ModalProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

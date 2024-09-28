@@ -7,12 +7,15 @@ import React from 'react'
 import PipelineInfoBar from '../_components/pipeline-infobar'
 import PipelineSettings from '../_components/pipeline-settings'
 import PipelineView from '../_components/pipeline-view'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
   params: { subaccountId: string; pipelineId: string }
 }
 
 const PipelinePage = async ({ params }: Props) => {
+  const t = await getTranslations()
+
   const pipelineDetails = await getPipelineDetails(params.pipelineId)
   if (!pipelineDetails) return redirect(`/subaccount/${params.subaccountId}/pipelines`)
 
@@ -27,8 +30,8 @@ const PipelinePage = async ({ params }: Props) => {
       <TabsList className="bg-transparent border-b-2 h-16 w-full justify-between mb-4">
         <PipelineInfoBar pipelineId={params.pipelineId} subAccountId={params.subaccountId} pipelines={pipelines} />
         <div>
-          <TabsTrigger value="view">Pipeline View</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsTrigger value="view">{t('pipelineView')}</TabsTrigger>
+          <TabsTrigger value="settings">{t('settings')}</TabsTrigger>
         </div>
       </TabsList>
       <TabsContent value="view">

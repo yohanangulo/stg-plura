@@ -9,12 +9,15 @@ import clsx from 'clsx'
 import SubscriptionHelper from './_components/subscription-helper'
 import Stripe from 'stripe'
 import { PricesList } from '@/lib/types'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
   params: { agencyId: string }
 }
 
-const page = async ({ params }: Props) => {
+const Page = async ({ params }: Props) => {
+  const t = await getTranslations()
+
   //CHALLENGE : Create the add on  products
   // TODO: Create the add on products
   // const addOns = await stripe.products.list({
@@ -96,9 +99,9 @@ const page = async ({ params }: Props) => {
         // customerId={agencySubscription?.customerId || ''}
         planExists={agencySubscription?.Subscription?.active === true}
       />
-      <h1 className="text-4xl p-4">Billing</h1>
+      <h1 className="text-4xl p-4">{t('billing')}</h1>
       <Separator className=" mb-6" />
-      <h2 className="text-2xl p-4">Current Plan</h2>
+      <h2 className="text-2xl p-4">{t('currentPlan')}</h2>
       <div className="flex flex-col lg:!flex-row justify-between gap-8">
         <PricingCard
           planExists={agencySubscription?.Subscription?.active === true}
@@ -149,15 +152,15 @@ const page = async ({ params }: Props) => {
           />
         ))}
       </div>
-      <h2 className="text-2xl p-4">Payment History</h2>
+      <h2 className="text-2xl p-4">{t('paymentHistory')}</h2>
       <Table className="bg-card border-[1px] border-border rounded-md">
         <TableHeader className="rounded-md">
           <TableRow>
-            <TableHead className="w-[200px]">Description</TableHead>
-            <TableHead className="w-[200px]">Invoice Id</TableHead>
-            <TableHead className="w-[300px]">Date</TableHead>
-            <TableHead className="w-[200px]">Paid</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="w-[200px]">{t('description')}</TableHead>
+            <TableHead className="w-[200px]">{t('invoiceId')}</TableHead>
+            <TableHead className="w-[300px]">{t('date')}</TableHead>
+            <TableHead className="w-[200px]">{t('paid')}</TableHead>
+            <TableHead className="text-right">{t('amount')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className="font-medium truncate">
@@ -186,4 +189,4 @@ const page = async ({ params }: Props) => {
   )
 }
 
-export default page
+export default Page

@@ -12,22 +12,13 @@ import { FunnelPage } from '@prisma/client'
 import { Check, ExternalLink, LucideEdit } from 'lucide-react'
 import React, { useState } from 'react'
 
-import {
-  DragDropContext,
-  DragStart,
-  DropResult,
-  Droppable,
-} from 'react-beautiful-dnd'
+import { DragDropContext, DragStart, DropResult, Droppable } from 'react-beautiful-dnd'
 import Link from 'next/link'
 import FunnelPagePlaceholder from '@/components/icons/funnel-page-placeholder'
 
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import FunnelStepCard from './funnel-step-card'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   funnel: FunnelsForSubAccount
@@ -37,26 +28,22 @@ type Props = {
 }
 
 const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
-  const [clickedPage, setClickedPage] = useState<FunnelPage | undefined>(
-    pages[0]
-  )
+  const t = useTranslations()
+
+  const [clickedPage, setClickedPage] = useState<FunnelPage | undefined>(pages[0])
   const { setOpen } = useModal()
   const [pagesState, setPagesState] = useState(pages)
   const onDragStart = (event: DragStart) => {
     //current chosen page
     const { draggableId } = event
-    const value = pagesState.find((page) => page.id === draggableId)
+    const value = pagesState.find(page => page.id === draggableId)
   }
 
   const onDragEnd = (dropResult: DropResult) => {
     const { destination, source } = dropResult
 
     //no destination or same position
-    if (
-      !destination ||
-      (destination.droppableId === source.droppableId &&
-        destination.index === source.index)
-    ) {
+    if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) {
       return
     }
     //change state
@@ -77,7 +64,7 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
             order: index,
             name: page.name,
           },
-          funnelId
+          funnelId,
         )
       } catch (error) {
         console.log(error)
@@ -103,35 +90,16 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
           <ScrollArea className="h-full ">
             <div className="flex gap-4 items-center">
               <Check />
-              Funnel Steps
+              {t('funnelSteps')}
             </div>
             {pagesState.length ? (
-              <DragDropContext
-                onDragEnd={onDragEnd}
-                onDragStart={onDragStart}
-              >
-                <Droppable
-                  droppableId="funnels"
-                  direction="vertical"
-                  key="funnels"
-                >
-                  {(provided) => (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
+              <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+                <Droppable droppableId="funnels" direction="vertical" key="funnels">
+                  {provided => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
                       {pagesState.map((page, idx) => (
-                        <div
-                          className="relative"
-                          key={page.id}
-                          onClick={() => setClickedPage(page)}
-                        >
-                          <FunnelStepCard
-                            funnelPage={page}
-                            index={idx}
-                            key={page.id}
-                            activePage={page.id === clickedPage?.id}
-                          />
+                        <div className="relative" key={page.id} onClick={() => setClickedPage(page)}>
+                          <FunnelStepCard funnelPage={page} index={idx} key={page.id} activePage={page.id === clickedPage?.id} />
                         </div>
                       ))}
                     </div>
@@ -139,9 +107,7 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
                 </Droppable>
               </DragDropContext>
             ) : (
-              <div className="text-center text-muted-foreground py-6">
-                No Pages
-              </div>
+              <div className="text-center text-muted-foreground py-6">{t('noPages')}</div>
             )}
           </ScrollArea>
           <Button
@@ -152,23 +118,19 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
                   title=" Create or Update a Funnel Page"
                   subheading="Funnel Pages allow you to create step by step processes for customers to follow"
                 >
-                  <CreateFunnelPage
-                    subaccountId={subaccountId}
-                    funnelId={funnelId}
-                    order={pagesState.length}
-                  />
-                </CustomModal>
+                  <CreateFunnelPage subaccountId={subaccountId} funnelId={funnelId} order={pagesState.length} />
+                </CustomModal>,
               )
             }}
           >
-            Create New Steps
+            {t('createNewSteps')}
           </Button>
         </aside>
         <aside className="flex-[0.7] bg-muted p-4 ">
           {!!pages.length ? (
             <Card className="h-full flex justify-between flex-col">
               <CardHeader>
-                <p className="text-sm text-muted-foreground">Page name</p>
+                <p className="text-sm text-muted-foreground">{t('pageName')}</p>
                 <CardTitle>{clickedPage?.name}</CardTitle>
                 <CardDescription className="flex flex-col gap-4">
                   <div className="border-2 rounded-lg sm:w-80 w-full  overflow-clip">
@@ -193,8 +155,7 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
                       <ExternalLink size={15} />
                       <div className="w-64 overflow-hidden overflow-ellipsis ">
                         {process.env.NEXT_PUBLIC_SCHEME}
-                        {funnel.subDomainName}.{process.env.NEXT_PUBLIC_DOMAIN}/
-                        {clickedPage?.pathName}
+                        {funnel.subDomainName}.{process.env.NEXT_PUBLIC_DOMAIN}/{clickedPage?.pathName}
                       </div>
                     </Link>
                   </div>
@@ -210,7 +171,7 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
             </Card>
           ) : (
             <div className="h-[600px] flex items-center justify-center text-muted-foreground">
-              Create a page to view page settings.
+              {t('createNewPageToViewPageSettings')}
             </div>
           )}
         </aside>

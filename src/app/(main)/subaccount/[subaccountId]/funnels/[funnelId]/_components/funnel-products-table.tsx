@@ -1,45 +1,32 @@
 'use client'
 import React, { useState } from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import Stripe from 'stripe'
 import Image from 'next/image'
-import {
-  saveActivityLogsNotification,
-  updateFunnelProducts,
-} from '@/lib/queries'
+import { saveActivityLogsNotification, updateFunnelProducts } from '@/lib/queries'
 import { Funnel } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 interface FunnelProductsTableProps {
   defaultData: Funnel
   products: Stripe.Product[]
 }
 
-const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
-  products,
-  defaultData,
-}) => {
+const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({ products, defaultData }) => {
+  const t = useTranslations()
+
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [liveProducts, setLiveProducts] = useState<
-    { productId: string; recurring: boolean }[] | []
-  >(JSON.parse(defaultData.liveProducts || '[]'))
+  const [liveProducts, setLiveProducts] = useState<{ productId: string; recurring: boolean }[] | []>(
+    JSON.parse(defaultData.liveProducts || '[]'),
+  )
 
   const handleSaveProducts = async () => {
     setIsLoading(true)
-    const response = await updateFunnelProducts(
-      JSON.stringify(liveProducts),
-      defaultData.id
-    )
+    const response = await updateFunnelProducts(JSON.stringify(liveProducts), defaultData.id)
     await saveActivityLogsNotification({
       agencyId: undefined,
       description: `Update funnel products | ${response.name}`,
@@ -52,16 +39,16 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
   const handleAddProduct = async (product: Stripe.Product) => {
     const productIdExists = liveProducts.find(
       //@ts-ignore
-      (prod) => prod.productId === product.default_price.id
+      prod => prod.productId === product.default_price.id,
     )
     productIdExists
       ? setLiveProducts(
           liveProducts.filter(
-            (prod) =>
+            prod =>
               prod.productId !==
               //@ts-ignore
-              product.default_price?.id
-          )
+              product.default_price?.id,
+          ),
         )
       : //@ts-ignore
         setLiveProducts([
@@ -79,22 +66,22 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
       <Table className="bg-card border-[1px] border-border rounded-md">
         <TableHeader className="rounded-md">
           <TableRow>
-            <TableHead>Live</TableHead>
-            <TableHead>Image</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Interval</TableHead>
-            <TableHead className="text-right">Price</TableHead>
+            <TableHead>{t('live')}</TableHead>
+            <TableHead>{t('image')}</TableHead>
+            <TableHead>{t('name')}</TableHead>
+            <TableHead>{t('interval')}</TableHead>
+            <TableHead className="text-right">{t('price')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className="font-medium truncate">
-          {products.map((product) => (
+          {products.map(product => (
             <TableRow key={product.id}>
               <TableCell>
                 <Input
                   defaultChecked={
                     !!liveProducts.find(
                       //@ts-ignore
-                      (prod) => prod.productId === product.default_price.id
+                      prod => prod.productId === product.default_price.id,
                     )
                   }
                   onChange={() => handleAddProduct(product)}
@@ -103,12 +90,7 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
                 />
               </TableCell>
               <TableCell>
-                <Image
-                  alt="product Image"
-                  height={60}
-                  width={60}
-                  src={product.images[0]}
-                />
+                <Image alt="product Image" height={60} width={60} src={product.images[0]} />
               </TableCell>
               <TableCell>{product.name}</TableCell>
               <TableCell>
@@ -128,12 +110,8 @@ const FunnelProductsTable: React.FC<FunnelProductsTableProps> = ({
           ))}
         </TableBody>
       </Table>
-      <Button
-        disabled={isLoading}
-        onClick={handleSaveProducts}
-        className="mt-4"
-      >
-        Save Products
+      <Button disabled={isLoading} onClick={handleSaveProducts} className="mt-4">
+        {t('saveProducts')}
       </Button>
     </>
   )

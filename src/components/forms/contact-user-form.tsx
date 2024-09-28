@@ -14,12 +14,15 @@ import { saveActivityLogsNotification, upsertContact } from '@/lib/queries'
 import { toast } from '../ui/use-toast'
 import { useRouter } from 'next/navigation'
 import { useModal } from '@/providers/modal-provider'
+import { useTranslations } from 'next-intl'
 
 interface ContactUserFormProps {
   subaccountId: string
 }
 
 const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
+  const t = useTranslations()
+
   const { setClose, data } = useModal()
   const router = useRouter()
   const form = useForm<z.infer<typeof ContactUserFormSchema>>({
@@ -69,8 +72,8 @@ const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
   return (
     <Card className=" w-full">
       <CardHeader>
-        <CardTitle>Contact Info</CardTitle>
-        <CardDescription>You can assign tickets to contacts and set a value for each contact in the ticket.</CardDescription>
+        <CardTitle>{t('contactInfo')}</CardTitle>
+        <CardDescription>{t('contactInfoDecs')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -81,7 +84,7 @@ const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Name" {...field} />
                   </FormControl>
@@ -95,7 +98,7 @@ const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input type="email" placeholder="Email" {...field} />
                   </FormControl>

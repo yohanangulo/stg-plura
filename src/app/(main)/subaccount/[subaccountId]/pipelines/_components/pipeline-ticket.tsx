@@ -29,6 +29,7 @@ import { deleteTicket, saveActivityLogsNotification } from '@/lib/queries'
 import { TicketWithTags } from '@/lib/types'
 import { useModal } from '@/providers/modal-provider'
 import { Contact2, Edit, MoreHorizontalIcon, Trash, User2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import React, { Dispatch, SetStateAction } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
@@ -42,6 +43,8 @@ type Props = {
 }
 
 const PipelineTicket = ({ allTickets, index, setAllTickets, subaccountId, ticket }: Props) => {
+  const t = useTranslations()
+
   const router = useRouter()
   const { setOpen, data } = useModal()
 
@@ -148,7 +151,7 @@ const PipelineTicket = ({ allTickets, index, setAllTickets, subaccountId, ticket
                             <div className="flex items-center pt-2">
                               <Contact2 className="mr-2 h-4 w-4 opacity-70" />
                               <span className="text-xs text-muted-foreground">
-                                Joined {ticket.Customer?.createdAt.toLocaleDateString()}
+                                {t('joined')} {ticket.Customer?.createdAt.toLocaleDateString()}
                               </span>
                             </div>
                           </div>
@@ -185,31 +188,29 @@ const PipelineTicket = ({ allTickets, index, setAllTickets, subaccountId, ticket
                     </span>
                   </CardFooter>
                   <DropdownMenuContent>
-                    <DropdownMenuLabel>Options</DropdownMenuLabel>
+                    <DropdownMenuLabel>{t('options')}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <AlertDialogTrigger>
                       <DropdownMenuItem className="flex items-center gap-2">
                         <Trash size={15} />
-                        Delete Ticket
+                        {t('deleteTicket')}
                       </DropdownMenuItem>
                     </AlertDialogTrigger>
                     <DropdownMenuItem className="flex items-center gap-2" onClick={handleClickEdit}>
                       <Edit size={15} />
-                      Edit Ticket
+                      {t('editTicket')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </Card>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete the ticket and remove it from our servers.
-                    </AlertDialogDescription>
+                    <AlertDialogTitle>{t('areYouAbsolutelySure')}</AlertDialogTitle>
+                    <AlertDialogDescription>{t('deleteTicketConfigMessage')}</AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter className="flex items-center">
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                     <AlertDialogAction className="bg-destructive" onClick={handleDeleteTicket}>
-                      Delete
+                      {t('delete')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

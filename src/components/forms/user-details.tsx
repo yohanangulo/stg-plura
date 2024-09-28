@@ -27,6 +27,7 @@ import Loading from '../global/loading'
 import { Separator } from '../ui/separator'
 import { Switch } from '../ui/switch'
 import { v4 } from 'uuid'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   id: string | null
@@ -36,6 +37,8 @@ type Props = {
 }
 
 const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
+  const t = useTranslations()
+
   const [subAccountPermissions, setSubAccountsPermissions] = useState<UserWithPermissionsAndSubAccounts | null>(null)
 
   const { data, setClose } = useModal()
@@ -168,8 +171,8 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>User Details</CardTitle>
-        <CardDescription>Add or update your information</CardDescription>
+        <CardTitle>{t('userDetails')}</CardTitle>
+        <CardDescription>{t('addOrUpdateYourInfo')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -180,7 +183,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
               name="avatarUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Profile picture</FormLabel>
+                  <FormLabel>{t('profilePicture')}</FormLabel>
                   <FormControl>
                     <FileUpload apiEndpoint="avatar" value={field.value} onChange={field.onChange} />
                   </FormControl>
@@ -195,7 +198,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>User full name</FormLabel>
+                  <FormLabel>{t('userFullName')}</FormLabel>
                   <FormControl>
                     <Input required placeholder="Full Name" {...field} />
                   </FormControl>
@@ -209,7 +212,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
               name="email"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input
                       readOnly={userData?.role === 'AGENCY_OWNER' || form.formState.isSubmitting}
@@ -227,7 +230,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
               name="role"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel> User Role</FormLabel>
+                  <FormLabel>{t('userRole')}</FormLabel>
                   <Select
                     disabled={field.value === 'AGENCY_OWNER'}
                     onValueChange={value => {
@@ -246,12 +249,12 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="AGENCY_ADMING">Agency Admin</SelectItem>
+                      <SelectItem value="AGENCY_ADMING">{t('agencyAdmin')}</SelectItem>
                       {(data?.user?.role === 'AGENCY_OWNER' || userData?.role === 'AGENCY_OWNER') && (
-                        <SelectItem value="AGENCY_OWNER">Agency Owner</SelectItem>
+                        <SelectItem value="AGENCY_OWNER">{t('agencyOwner')}</SelectItem>
                       )}
-                      <SelectItem value="SUBACCOUNT_USER">Sub Account User</SelectItem>
-                      <SelectItem value="SUBACCOUNT_GUEST">Sub Account Guest</SelectItem>
+                      <SelectItem value="SUBACCOUNT_USER">{t('subAccountUser')}</SelectItem>
+                      <SelectItem value="SUBACCOUNT_GUEST">{t('subAccountGuest')}</SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-muted-foreground">{roleState}</p>
@@ -265,11 +268,8 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
             {authUserData?.role === 'AGENCY_OWNER' && (
               <div>
                 <Separator className="my-4" />
-                <FormLabel> User Permissions</FormLabel>
-                <FormDescription className="mb-4">
-                  You can give Sub Account access to team member by turning on access control for each Sub Account. This is only
-                  visible to agency owners
-                </FormDescription>
+                <FormLabel>{t('userPermissions')}</FormLabel>
+                <FormDescription className="mb-4">{t('userPermissionsDesc')}</FormDescription>
                 <div className="flex flex-col gap-4">
                   {subAccounts?.map(subAccount => {
                     const subAccountPermissionsDetails = subAccountPermissions?.Permissions.find(

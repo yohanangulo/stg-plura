@@ -6,32 +6,28 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 import FunnelSettings from './_components/funnel-settings'
 import FunnelSteps from './_components/funnel-steps'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
   params: { funnelId: string; subaccountId: string }
 }
 
 const FunnelPage = async ({ params }: Props) => {
+  const t = await getTranslations()
+
   const funnelPages = await getFunnel(params.funnelId)
-  if (!funnelPages)
-    return redirect(`/subaccount/${params.subaccountId}/funnels`)
+  if (!funnelPages) return redirect(`/subaccount/${params.subaccountId}/funnels`)
 
   return (
     <BlurPage>
-      <Link
-        href={`/subaccount/${params.subaccountId}/funnels`}
-        className="flex justify-between gap-4 mb-4 text-muted-foreground"
-      >
-        Back
+      <Link href={`/subaccount/${params.subaccountId}/funnels`} className="flex justify-between gap-4 mb-4 text-muted-foreground">
+        {t('back')}
       </Link>
       <h1 className="text-3xl mb-8">{funnelPages.name}</h1>
-      <Tabs
-        defaultValue="steps"
-        className="w-full"
-      >
+      <Tabs defaultValue="steps" className="w-full">
         <TabsList className="grid  grid-cols-2 w-[50%] bg-transparent ">
-          <TabsTrigger value="steps">Steps</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsTrigger value="steps">{t('steps')}</TabsTrigger>
+          <TabsTrigger value="settings">{t('settings')}</TabsTrigger>
         </TabsList>
         <TabsContent value="steps">
           <FunnelSteps
@@ -42,10 +38,7 @@ const FunnelPage = async ({ params }: Props) => {
           />
         </TabsContent>
         <TabsContent value="settings">
-          <FunnelSettings
-            subaccountId={params.subaccountId}
-            defaultData={funnelPages}
-          />
+          <FunnelSettings subaccountId={params.subaccountId} defaultData={funnelPages} />
         </TabsContent>
       </Tabs>
     </BlurPage>
