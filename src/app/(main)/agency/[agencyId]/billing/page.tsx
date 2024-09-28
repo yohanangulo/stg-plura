@@ -110,22 +110,21 @@ const Page = async ({ params }: Props) => {
           customerId={''}
           // customerId={agencySubscription?.customerId || ''}
           amt={agencySubscription?.Subscription?.active === true ? currentPlanDetails?.price || '$0' : '$0'}
-          buttonCta={agencySubscription?.Subscription?.active === true ? 'Change Plan' : 'Get Started'}
-          highlightDescription="Want to modify your plan? You can do this here. If you have
-          further question contact support@plura-app.com"
-          highlightTitle="Plan Options"
+          buttonCta={agencySubscription?.Subscription?.active === true ? t('changePlan') : t('getStarted')}
+          highlightDescription={t('wantToModifyYourPlan')}
+          highlightTitle={t('planOptions')}
           description={
             agencySubscription?.Subscription?.active === true
-              ? currentPlanDetails?.description || 'Lets get started'
-              : 'Lets get started! Pick a plan that works best for you.'
+              ? currentPlanDetails?.description || t('letsGetStarted')
+              : t('letsGetStartedPickAPlanThatWorksForYou')
           }
-          duration="/ month"
+          duration={t('duration')}
           features={
             agencySubscription?.Subscription?.active === true
               ? currentPlanDetails?.features || []
               : currentPlanDetails?.features || pricingCards.find(pricing => pricing.title === 'Starter')?.features || []
           }
-          title={agencySubscription?.Subscription?.active === true ? currentPlanDetails?.title || 'Starter' : 'Starter'}
+          title={agencySubscription?.Subscription?.active === true ? currentPlanDetails?.title || t('starter') : t('starter')}
         />
         {addOns.data.map(addOn => (
           <PricingCard
@@ -142,13 +141,13 @@ const Page = async ({ params }: Props) => {
                   `$${addOn.default_price.unit_amount / 100}`
                 : '$0'
             }
-            buttonCta="Subscribe"
-            description="Dedicated support line & teams channel for support"
-            duration="/ month"
+            buttonCta={t('subscribe')}
+            description={t('dedicatedSupport')}
+            duration={t('duration')}
             features={[]}
-            title={'24/7 priority support'}
-            highlightTitle="Get support now!"
-            highlightDescription="Get priority support and skip the long long with the click of a button."
+            title={t('24/7PrioritySupport')}
+            highlightTitle={t('getSupportNow')}
+            highlightDescription={t('getPrioritySupport')}
           />
         ))}
       </div>

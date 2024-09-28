@@ -39,7 +39,7 @@ const AllSubaccountsPage = async ({ params }: Props) => {
           <CommandInput placeholder="Search Account..." />
           <CommandList>
             <CommandEmpty>{t('noResultsFound')}</CommandEmpty>
-            <CommandGroup heading="Sub Accounts">
+            <CommandGroup heading={t('subAccount')}>
               {!!user.Agency?.SubAccount.length ? (
                 user.Agency.SubAccount.map((subaccount: SubAccount) => (
                   <CommandItem

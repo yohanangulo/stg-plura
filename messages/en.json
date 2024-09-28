@@ -292,5 +292,17 @@
   "Settings": "Settings",
   "Funnels": "Funnels",
   "Contacts": "Contacts",
-  "Automations": "Automations"
+  "Automations": "Automations",
+  "changePlan": "Change Plan",
+  "wantToModifyYourPlan": "Want to modify your plan? You can do this here. If you have further question contact soporte@2sto.com",
+  "planOptions": "Plan Options",
+  "letsGetStartedPickAPlanThatWorksForYou": "Let's get started. Pick a plan that works for you",
+  "duration": "/ month",
+  "starter": "Starter",
+  "subscribe": "Subscribe",
+  "dedicatedSupport": "Dedicated support line & teams channel for support",
+  "24/7PrioritySupport": "24/7 Priority Support",
+  "getSupportNow": "Get support now!",
+  "getPrioritySupport": "Get priority support and skip the long long with the click of a button.",
+  "youCanSwitchBet": "You can switch bettween"
 }
