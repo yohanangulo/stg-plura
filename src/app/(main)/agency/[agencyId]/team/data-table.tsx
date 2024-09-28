@@ -9,6 +9,7 @@ import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import CustomModal from '@/components/global/custom-modal'
+import { useTranslations } from 'next-intl'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -24,6 +25,8 @@ export default function DataTable<TData, TValue>({
   actionButtonText,
   modalChildren,
 }: DataTableProps<TData, TValue>) {
+  const t = useTranslations()
+
   const { setOpen } = useModal()
   const table = useReactTable({
     data,
@@ -87,7 +90,7 @@ export default function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No Results.
+                  {t('noResultsFound')}
                 </TableCell>
               </TableRow>
             )}

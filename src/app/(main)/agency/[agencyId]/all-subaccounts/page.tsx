@@ -19,12 +19,15 @@ import Link from 'next/link'
 import React from 'react'
 import DeleteButton from './_components/delete-button'
 import CreateSubaccountButton from './_components/create-subaccount-btn'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
   params: { agencyId: string }
 }
 
 const AllSubaccountsPage = async ({ params }: Props) => {
+  const t = await getTranslations()
+
   const user = await getAuthUserDetails()
   if (!user) return
 
@@ -35,7 +38,7 @@ const AllSubaccountsPage = async ({ params }: Props) => {
         <Command className="rounded-lg bg-transparent">
           <CommandInput placeholder="Search Account..." />
           <CommandList>
-            <CommandEmpty>No Results Found.</CommandEmpty>
+            <CommandEmpty>{t('noResultsFound')}</CommandEmpty>
             <CommandGroup heading="Sub Accounts">
               {!!user.Agency?.SubAccount.length ? (
                 user.Agency.SubAccount.map((subaccount: SubAccount) => (
@@ -61,18 +64,16 @@ const AllSubaccountsPage = async ({ params }: Props) => {
                     </Link>
                     <AlertDialogTrigger asChild>
                       <Button size={'sm'} variant={'destructive'} className="w-20 hover:bg-red-600 hover:text-white !text-white">
-                        Delete
+                        {t('delete')}
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="text-left">Are your absolutely sure</AlertDialogTitle>
-                        <AlertDescription className="text-left">
-                          This action cannot be undon. This will delete the subaccount and all data related to the subaccount.
-                        </AlertDescription>
+                        <AlertDialogTitle className="text-left">{t('areYouAbsolutelySure')}</AlertDialogTitle>
+                        <AlertDescription className="text-left">{t('thisActionCannotBeUndon')}</AlertDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter className="flex items-center">
-                        <AlertDialogCancel className="mb-2">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel className="mb-2">{t('cancel')}</AlertDialogCancel>
                         <AlertDialogAction className="bg-destructive hover:bg-destructive mb-2">
                           <DeleteButton subaccountId={subaccount.id} />
                         </AlertDialogAction>
@@ -81,7 +82,7 @@ const AllSubaccountsPage = async ({ params }: Props) => {
                   </CommandItem>
                 ))
               ) : (
-                <div className="text-muted-foreground text-center p-4">No Sub accounts</div>
+                <div className="text-muted-foreground text-center p-4">{t('noSubAccounts')}</div>
               )}
             </CommandGroup>
           </CommandList>

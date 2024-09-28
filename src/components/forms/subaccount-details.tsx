@@ -19,6 +19,7 @@ import { saveActivityLogsNotification, upsertSubAccount } from '@/lib/queries'
 import { useEffect } from 'react'
 import Loading from '../global/loading'
 import { useModal } from '@/providers/modal-provider'
+import { useTranslations } from 'next-intl'
 
 const formSchema = z.object({
   name: z.string(),
@@ -45,6 +46,8 @@ interface SubAccountDetailsProps {
 }
 
 const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDetails, userId, userName }) => {
+  const t = useTranslations()
+
   const { toast } = useToast()
   const { setClose } = useModal()
   const router = useRouter()
@@ -116,8 +119,8 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Sub Account Information</CardTitle>
-        <CardDescription>Please enter business details</CardDescription>
+        <CardTitle>{t('subAccountInformation')}</CardTitle>
+        <CardDescription>{t('pleaseEnterSubAccDetails')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -128,7 +131,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
               name="subAccountLogo"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Account Logo</FormLabel>
+                  <FormLabel>{t('accountLogo')}</FormLabel>
                   <FormControl>
                     <FileUpload apiEndpoint="subaccountLogo" value={field.value} onChange={field.onChange} />
                   </FormControl>
@@ -143,7 +146,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                 name="name"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Account Name</FormLabel>
+                    <FormLabel>{t('accountName')}</FormLabel>
                     <FormControl>
                       <Input required placeholder="Your agency name" {...field} />
                     </FormControl>
@@ -157,7 +160,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                 name="companyEmail"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Acount Email</FormLabel>
+                    <FormLabel>{t('accountEmail')}</FormLabel>
                     <FormControl>
                       <Input placeholder="Email" {...field} />
                     </FormControl>
@@ -173,7 +176,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                 name="companyPhone"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Acount Phone Number</FormLabel>
+                    <FormLabel>{t('accountPhoneNumber')}</FormLabel>
                     <FormControl>
                       <Input placeholder="Phone" required {...field} />
                     </FormControl>
@@ -189,7 +192,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
               name="address"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>{t('address')}</FormLabel>
                   <FormControl>
                     <Input required placeholder="123 st..." {...field} />
                   </FormControl>
@@ -204,7 +207,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                 name="city"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>City</FormLabel>
+                    <FormLabel>{t('city')}</FormLabel>
                     <FormControl>
                       <Input required placeholder="City" {...field} />
                     </FormControl>
@@ -218,7 +221,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                 name="state"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>State</FormLabel>
+                    <FormLabel>{t('state')}</FormLabel>
                     <FormControl>
                       <Input required placeholder="State" {...field} />
                     </FormControl>
@@ -232,7 +235,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                 name="zipCode"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Zipcpde</FormLabel>
+                    <FormLabel>{t('zipCode')}</FormLabel>
                     <FormControl>
                       <Input required placeholder="Zipcode" {...field} />
                     </FormControl>
@@ -247,7 +250,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
               name="country"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Country</FormLabel>
+                  <FormLabel>{t('country')}</FormLabel>
                   <FormControl>
                     <Input required placeholder="Country" {...field} />
                   </FormControl>

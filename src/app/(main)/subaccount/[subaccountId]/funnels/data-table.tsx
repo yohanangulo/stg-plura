@@ -11,6 +11,8 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import CustomModal from '@/components/global/custom-modal'
 
+import { useTranslations } from 'next-intl'
+
 interface FunnelsDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -26,6 +28,8 @@ export default function FunnelsDataTable<TData, TValue>({
   modalChildren,
   actionButtonText,
 }: FunnelsDataTableProps<TData, TValue>) {
+  const t = useTranslations()
+
   const { isOpen, setOpen, setClose } = useModal()
 
   const table = useReactTable({
@@ -87,7 +91,7 @@ export default function FunnelsDataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No Results.
+                  {t('noResultsFound')}
                 </TableCell>
               </TableRow>
             )}

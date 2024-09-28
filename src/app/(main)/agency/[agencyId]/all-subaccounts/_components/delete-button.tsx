@@ -1,6 +1,7 @@
 'use client'
 
 import { deleteSubAccount, getSubaccountDetails, saveActivityLogsNotification } from '@/lib/queries'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -9,6 +10,8 @@ type Props = {
 }
 
 const DeleteButton = ({ subaccountId }: Props) => {
+  const t = useTranslations()
+
   const router = useRouter()
 
   return (
@@ -25,7 +28,7 @@ const DeleteButton = ({ subaccountId }: Props) => {
         router.refresh()
       }}
     >
-      Delete Sub Account
+      {t('deleteSubAccount')}
     </div>
   )
 }

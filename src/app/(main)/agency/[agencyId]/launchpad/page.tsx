@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { stripe } from '@/lib/stripe'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
   params: {
@@ -16,6 +17,8 @@ type Props = {
 }
 
 const LaunchPadPage = async ({ params, searchParams }: Props) => {
+  const t = await getTranslations()
+
   const agencyDetails = await db.agency.findUnique({
     where: { id: params.agencyId },
   })
@@ -62,21 +65,21 @@ const LaunchPadPage = async ({ params, searchParams }: Props) => {
       <div className="w-full h-full max-w-[800px]">
         <Card className="border-none">
           <CardHeader>
-            <CardTitle>Lets get started!</CardTitle>
-            <CardDescription>Follow the steps below to get your account setup.</CardDescription>
+            <CardTitle>{t('letsGetStarted')}</CardTitle>
+            <CardDescription>{t('followStepsBellowToGetAccount')}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex justify-between items-center w-full border p-4 rounded-lg gap-2">
               <div className="flex md:items-center gap-4 flex-col md:!flex-row">
                 <Image src="/appstore.png" alt="app logo" height={80} width={80} className="rounded-md object-contain" />
-                <p> Save the website as a shortcut on your mobile device</p>
+                <p>{t('saveWebsiteAsShortcut')}</p>
               </div>
-              <Button>Start</Button>
+              <Button>{t('start')}</Button>
             </div>
             <div className="flex justify-between items-center w-full border p-4 rounded-lg gap-2">
               <div className="flex md:items-center gap-4 flex-col md:!flex-row">
                 <Image src="/stripelogo.png" alt="app logo" height={80} width={80} className="rounded-md object-contain" />
-                <p>Connect your stripe account to accept payments and see your dashboard.</p>
+                <p>{t('connectYourStripeAccountToAcceptPayments')}</p>
               </div>
               {agencyDetails.connectAccountId || connectedStripeAccount ? (
                 <CheckCircleIcon size={50} className=" text-primary p-2 flex-shrink-0" />
@@ -85,7 +88,7 @@ const LaunchPadPage = async ({ params, searchParams }: Props) => {
                   {
                     // TODO: add stripe oauth link
                   }
-                  Start
+                  {t('start')}
                 </Link>
               )}
             </div>
@@ -98,13 +101,13 @@ const LaunchPadPage = async ({ params, searchParams }: Props) => {
                   width={80}
                   className="rounded-md object-contain"
                 />
-                <p> Fill in all your bussiness details</p>
+                <p>{t('fillInYourBusinessDetails')}</p>
               </div>
               {allDetailsExist ? (
                 <CheckCircleIcon size={50} className="text-primary p-2 flex-shrink-0" />
               ) : (
                 <Link className="bg-primary py-2 px-4 rounded-md text-white" href={`/agency/${params.agencyId}/settings`}>
-                  Start
+                  {t('start')}
                 </Link>
               )}
             </div>

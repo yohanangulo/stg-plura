@@ -7,12 +7,15 @@ import { Contact, SubAccount, Ticket } from '@prisma/client'
 import { format } from 'date-fns/format'
 import React from 'react'
 import CraeteContactButton from './_components/create-contact-btn'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
   params: { subaccountId: string }
 }
 
 const ContactPage = async ({ params }: Props) => {
+  const t = await getTranslations()
+
   type SubAccountWithContacts = SubAccount & {
     Contact: (Contact & { Ticket: Ticket[] })[]
   }
@@ -53,16 +56,16 @@ const ContactPage = async ({ params }: Props) => {
   }
   return (
     <BlurPage>
-      <h1 className="text-4xl p-4">Contacts</h1>
+      <h1 className="text-4xl p-4">{t('contacts')}</h1>
       <CraeteContactButton subaccountId={params.subaccountId} />
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead className="w-[300px]">Email</TableHead>
-            <TableHead className="w-[200px]">Active</TableHead>
-            <TableHead>Created Date</TableHead>
-            <TableHead className="text-right">Total Value</TableHead>
+            <TableHead className="w-[200px]">{t('name')}</TableHead>
+            <TableHead className="w-[300px]">{t('email')}</TableHead>
+            <TableHead className="w-[200px]">{t('active')}</TableHead>
+            <TableHead>{t('createdDate')}</TableHead>
+            <TableHead className="text-right">{t('totalValue')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className="font-medium truncate">
@@ -77,9 +80,9 @@ const ContactPage = async ({ params }: Props) => {
               <TableCell>{contact.email}</TableCell>
               <TableCell>
                 {formatTotal(contact.Ticket) === '$0.00' ? (
-                  <Badge variant={'destructive'}>Inactive</Badge>
+                  <Badge variant={'destructive'}>{t('inactive')}</Badge>
                 ) : (
-                  <Badge className="bg-emerald-700">Active</Badge>
+                  <Badge className="bg-emerald-700">{t('active')}</Badge>
                 )}
               </TableCell>
               <TableCell>{format(contact.createdAt, 'MM/dd/yyyy')}</TableCell>

@@ -3,13 +3,16 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { Plan } from '@prisma/client'
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import React, { useState } from 'react'
+import { useTranslations } from 'next-intl'
+import React, { use, useState } from 'react'
 
 type Props = {
   selectedPriceId: string | Plan
 }
 
 const SubscriptionForm = ({ selectedPriceId }: Props) => {
+  const t = useTranslations()
+
   const { toast } = useToast()
   const elements = useElements()
   const stripeHook = useStripe()
@@ -53,7 +56,7 @@ const SubscriptionForm = ({ selectedPriceId }: Props) => {
       <small className="text-destructive">{priceError}</small>
       <PaymentElement />
       <Button disabled={!stripeHook} className="mt-4 w-full">
-        Submit
+        {t('submit')}
       </Button>
     </form>
   )

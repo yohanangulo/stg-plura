@@ -9,15 +9,15 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
 export default function Home() {
-  const t = useTranslations('Index')
+  const t = useTranslations()
 
   return (
     <>
       <section className="h-full w-full pt-36 relative flex items-center flex-col">
         <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-        <p className="text-center">Run your agency, in one place</p>
+        <p className="text-center">{t('runYourAgency')}</p>
         <div className="bg-gradient-to-r from-primary to-secondary-foreground text-transparent bg-clip-text relative">
-          <h1 className="text-9xl font-bold text-center md:text-[300px]">Site</h1>
+          <h1 className="text-9xl font-bold text-center md:text-[300px]">{t('2Sto')}</h1>
         </div>
         <div className="flex justify-center items-center relative md:mt-[-70px]">
           <Image
@@ -30,12 +30,10 @@ export default function Home() {
           <div className="bottom-0 top-[50%] bg-gradient-to-t dark:from-background left-0 right-0 absolute z-10"></div>
         </div>
       </section>
-      <section className="flex flex-col justify-center items-center gap-4 md:mt-20 mt-40">
-        <h2 className="text-4xl text-center">{t('Index')}</h2>
-        <h2 className="text-4xl text-center">Choose what fits you right</h2>
+      <section className="flex flex-col justify-center items-center gap-4 md:mt-20 mt-40 pb-40">
+        <h2 className="text-4xl text-center">{t('chooseWhatFitsYouRight')}</h2>
         <p className="text-muted-foreground text-center">
-          Our straightforward pricing plans are tailored to meet your needs. If you are not <br />
-          ready to commit youcan get started for free.
+          {t('straightforwardPricing')} <br /> {t('straightforwardPricing2')}
         </p>
         <div className="flex justify-center gap-4 flex-wrap mt-6 ">
           {pricingCards.map(card => (
@@ -53,20 +51,20 @@ export default function Home() {
                     'text-muted-foreground': card.title !== 'Unlimited Saas',
                   })}
                 >
-                  {card.title}
+                  {t(card.title)}
                 </CardTitle>
-                <CardDescription>{card.description}</CardDescription>
+                <CardDescription>{t(card.description)}</CardDescription>
               </CardHeader>
               <CardContent>
                 <span className="text-4xl font-bold">{card.price}</span>
-                <span>/m</span>
+                <span>{'/m'}</span>
               </CardContent>
               <CardFooter className="flex flex-col items-start gap-4">
                 <div>
                   {card.features.map(feature => (
                     <div key={feature} className="flex gap-2 items-center">
                       <Check className="text-muted-foreground" />
-                      <p>{feature}</p>
+                      <p>{t(feature)}</p>
                     </div>
                   ))}
                 </div>
@@ -76,7 +74,7 @@ export default function Home() {
                     '!bg-muted-foreground': card.title !== 'Unlimited Saas',
                   })}
                 >
-                  Get Started
+                  {t('getStarted')}
                 </Link>
               </CardFooter>
             </Card>

@@ -2,6 +2,7 @@ import { FileIcon, X } from 'lucide-react'
 import Image from 'next/image'
 import { Button } from '../ui/button'
 import { UploadDropzone } from '@/lib/uploadthing'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   apiEndpoint: 'agencyLogo' | 'avatar' | 'subaccountLogo'
@@ -10,6 +11,8 @@ type Props = {
 }
 
 const FileUpload = ({ apiEndpoint, onChange, value }: Props) => {
+  const t = useTranslations()
+
   const type = value?.split('.').pop()
 
   if (value) {
@@ -28,13 +31,13 @@ const FileUpload = ({ apiEndpoint, onChange, value }: Props) => {
               rel="noopener_noreferrer"
               className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
             >
-              View PDF
+              {t('viewPdf')}
             </a>
           </div>
         )}
         <Button onClick={() => onChange('')} variant="ghost" type="button">
           <X className="h-4 w-4" />
-          Remove Logo
+          {t('removeLogo')}
         </Button>
       </div>
     )

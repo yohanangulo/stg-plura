@@ -17,6 +17,7 @@ import { deleteFunnelePage, getFunnels, saveActivityLogsNotification, upsertFunn
 import { useRouter } from 'next/navigation'
 import { v4 } from 'uuid'
 import { CopyPlusIcon, Trash } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface CreateFunnelPageProps {
   defaultData?: FunnelPage
@@ -26,6 +27,8 @@ interface CreateFunnelPageProps {
 }
 
 const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnelId, order, subaccountId }) => {
+  const t = useTranslations()
+
   const { toast } = useToast()
   const router = useRouter()
   //ch
@@ -85,10 +88,8 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Funnel Page</CardTitle>
-        <CardDescription>
-          Funnel pages are flow in the order they are created by default. You can move them around to change their order.
-        </CardDescription>
+        <CardTitle>{t('funnelPage')}</CardTitle>
+        <CardDescription>{t('funnelPageDesc')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -99,7 +100,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
               name="name"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Name" {...field} />
                   </FormControl>
@@ -113,7 +114,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
               name="pathName"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Path Name</FormLabel>
+                  <FormLabel>{t('pathName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Path for the page" {...field} value={field.value?.toLowerCase()} />
                   </FormControl>

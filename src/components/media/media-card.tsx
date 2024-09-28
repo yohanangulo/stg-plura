@@ -1,4 +1,5 @@
 'use client'
+
 import { Media } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -25,10 +26,13 @@ import { Copy, MoreHorizontal, Trash } from 'lucide-react'
 import Image from 'next/image'
 import { deleteMedia, saveActivityLogsNotification } from '@/lib/queries'
 import { toast } from '../ui/use-toast'
+import { useTranslations } from 'next-intl'
 
 type Props = { file: Media }
 
 const MediaCard = ({ file }: Props) => {
+  const t = useTranslations()
+
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
@@ -51,7 +55,7 @@ const MediaCard = ({ file }: Props) => {
           </div>
 
           <DropdownMenuContent>
-            <DropdownMenuLabel>Menu</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('menu')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="flex gap-2"
@@ -60,11 +64,11 @@ const MediaCard = ({ file }: Props) => {
                 toast({ title: 'Copied To Clipboard' })
               }}
             >
-              <Copy size={15} /> Copy Image Link
+              <Copy size={15} /> {t('copyImageLink')}
             </DropdownMenuItem>
             <AlertDialogTrigger asChild>
               <DropdownMenuItem className="flex gap-2">
-                <Trash size={15} /> Delete File
+                <Trash size={15} /> {'deleteFile'}
               </DropdownMenuItem>
             </AlertDialogTrigger>
           </DropdownMenuContent>
@@ -72,13 +76,11 @@ const MediaCard = ({ file }: Props) => {
       </DropdownMenu>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-left">Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription className="text-left">
-            Are you sure you want to delete this file? All subaccount using this file will no longer have access to it!
-          </AlertDialogDescription>
+          <AlertDialogTitle className="text-left">{t('areYouAbsolutelySure')}</AlertDialogTitle>
+          <AlertDialogDescription className="text-left">{t('deleteFileConfMessage')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex items-center">
-          <AlertDialogCancel className="mb-2">Cancel</AlertDialogCancel>
+          <AlertDialogCancel className="mb-2">{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction
             disabled={loading}
             className="bg-destructive hover:bg-destructive mb-2"
@@ -98,7 +100,7 @@ const MediaCard = ({ file }: Props) => {
               router.refresh()
             }}
           >
-            Delete
+            {t('delete')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

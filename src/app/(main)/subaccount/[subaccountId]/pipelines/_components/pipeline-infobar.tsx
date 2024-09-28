@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 import { useModal } from '@/providers/modal-provider'
 import { Pipeline } from '@prisma/client'
 import { Check, ChevronsUpDown, Plus } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import React from 'react'
 
@@ -19,6 +20,8 @@ type Props = {
 }
 
 const PipelineInfoBar = ({ pipelineId, pipelines, subAccountId }: Props) => {
+  const t = useTranslations()
+
   const { setOpen: setOpenModal, setClose } = useModal()
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState(pipelineId)
@@ -46,7 +49,7 @@ const PipelineInfoBar = ({ pipelineId, pipelines, subAccountId }: Props) => {
           </PopoverTrigger>
           <PopoverContent className="w-[200px] p-0">
             <Command>
-              <CommandEmpty>No pipelines found.</CommandEmpty>
+              <CommandEmpty>{t('noPipelinesFound')}</CommandEmpty>
               <CommandGroup>
                 {pipelines.map(pipeline => (
                   <Link key={pipeline.id} href={`/subaccount/${subAccountId}/pipelines/${pipeline.id}`}>
@@ -65,7 +68,7 @@ const PipelineInfoBar = ({ pipelineId, pipelines, subAccountId }: Props) => {
                 ))}
                 <Button variant="secondary" className="flex gap-2 w-full mt-4" onClick={handleClickCreatePipeline}>
                   <Plus size={15} />
-                  Create Pipeline
+                  {t('createPipeline')}
                 </Button>
               </CommandGroup>
             </Command>

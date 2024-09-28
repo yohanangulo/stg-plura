@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react'
 import { z } from 'zod'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
@@ -11,12 +12,15 @@ import { Button } from '../ui/button'
 import Loading from '../global/loading'
 import { saveActivityLogsNotification, sendInvitation } from '@/lib/queries'
 import { useToast } from '../ui/use-toast'
+import { useTranslations } from 'next-intl'
 
 interface SendInvitationProps {
   agencyId: string
 }
 
 const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
+  const t = useTranslations()
+
   const { toast } = useToast()
   const userDataSchema = z.object({
     email: z.string().email(),
@@ -57,11 +61,8 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Invitation</CardTitle>
-        <CardDescription>
-          An invitation will be sent to the user. Users who already have an invitation sent out to their email, will not receive
-          another invitation.
-        </CardDescription>
+        <CardTitle>{t('invitation')}</CardTitle>
+        <CardDescription>{t('invitationDesc')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -72,7 +73,7 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
               name="email"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Email" {...field} />
                   </FormControl>
@@ -86,7 +87,7 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
               name="role"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>User role</FormLabel>
+                  <FormLabel>{t('userRole')}</FormLabel>
                   <Select onValueChange={value => field.onChange(value)} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -94,9 +95,9 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="AGENCY_ADMIN">Agency Admin</SelectItem>
-                      <SelectItem value="SUBACCOUNT_USER">Sub Account User</SelectItem>
-                      <SelectItem value="SUBACCOUNT_GUEST">Sub Account Guest</SelectItem>
+                      <SelectItem value="AGENCY_ADMIN">{t('agencyAdmin')}</SelectItem>
+                      <SelectItem value="SUBACCOUNT_USER">{t('subAccountUser')}</SelectItem>
+                      <SelectItem value="SUBACCOUNT_GUEST">{t('subAccountGuest')}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

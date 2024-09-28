@@ -8,12 +8,15 @@ import TabList from './tabs'
 import SettingsTab from './tabs/settings-tab'
 import MediaBucketTab from './tabs/media-bucket-tab'
 import ComponentsTab from './tabs/components-tab'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   subaccountId: string
 }
 
 const FunnelEditorSidebar = ({ subaccountId }: Props) => {
+  const t = useTranslations()
+
   const { state, dispatch } = useEditor()
 
   return (
@@ -38,8 +41,8 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <div className="grid gap-4 h-full pb-36 overflow-auto">
             <TabsContent value="Settings">
               <SheetHeader className="text-left p-6">
-                <SheetTitle>Styles</SheetTitle>
-                <SheetDescription>Show your creativity! You can customize every component as you like.</SheetDescription>
+                <SheetTitle>{t('styles')}</SheetTitle>
+                <SheetDescription>{t('showYourCreativity')}</SheetDescription>
               </SheetHeader>
               <SettingsTab />
             </TabsContent>
@@ -48,8 +51,8 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
             </TabsContent>
             <TabsContent value="Components">
               <SheetHeader className="text-left p-6 ">
-                <SheetTitle>Components</SheetTitle>
-                <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
+                <SheetTitle>{t('components')}</SheetTitle>
+                <SheetDescription>{t('youCanDragAndDrop')}</SheetDescription>
               </SheetHeader>
               <ComponentsTab />
             </TabsContent>

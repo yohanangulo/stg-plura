@@ -1,4 +1,5 @@
 'use client'
+
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from '@/components/ui/use-toast'
 import { pricingCards } from '@/lib/constants'
@@ -12,6 +13,7 @@ import { Elements } from '@stripe/react-stripe-js'
 import { getStripe } from '@/lib/stripe/stripe-client'
 import Loading from '@/components/global/loading'
 import SubscriptionForm from '.'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   customerId: string
@@ -19,6 +21,8 @@ type Props = {
 }
 
 const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
+  const t = useTranslations()
+
   const { data, setClose } = useModal()
   const router = useRouter()
   const [selectedPriceId, setSelectedPriceId] = useState<Plan | ''>(data?.plans?.defaultPriceId || '')
@@ -92,7 +96,7 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
 
         {options.clientSecret && !planExists && (
           <>
-            <h1 className="text-xl">Payment Method</h1>
+            <h1 className="text-xl">{t('paymentMethod')}</h1>
             <Elements stripe={getStripe()} options={options}>
               <SubscriptionForm selectedPriceId={selectedPriceId} />
             </Elements>

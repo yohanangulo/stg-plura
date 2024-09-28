@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
 import PipelineLane from './pipeline-lane'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   lanes: LaneDetail[]
@@ -22,6 +23,8 @@ type Props = {
 }
 
 const PipelineView = ({ lanes, pipelineDetails, pipelineId, subaccountId, updateLanesOrder, updateTicketsOrder }: Props) => {
+  const t = useTranslations()
+
   const { setOpen } = useModal()
   const router = useRouter()
   const [allLanes, setAllLanes] = useState<LaneDetail[]>([])
@@ -116,7 +119,7 @@ const PipelineView = ({ lanes, pipelineDetails, pipelineId, subaccountId, update
           <h1 className="text-2xl">{pipelineDetails?.name}</h1>
           <Button className="flex items-center gap-4" onClick={handleAddLane}>
             <Plus size={15} />
-            Create Lane
+            {t('createLane')}
           </Button>
         </div>
         <Droppable droppableId="lanes" type="lane" direction="horizontal" key="lanes">
