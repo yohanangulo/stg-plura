@@ -8,6 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import Loading from '../global/loading'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   title: string
@@ -16,6 +17,8 @@ type Props = {
 }
 
 const ContactForm = ({ apiCall, subTitle, title }: Props) => {
+  const t = useTranslations()
+
   const form = useForm<z.infer<typeof ContactUserFormSchema>>({
     mode: 'onChange',
     resolver: zodResolver(ContactUserFormSchema),
@@ -43,7 +46,7 @@ const ContactForm = ({ apiCall, subTitle, title }: Props) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Name" {...field} />
                   </FormControl>
@@ -57,7 +60,7 @@ const ContactForm = ({ apiCall, subTitle, title }: Props) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input type="email" placeholder="Email" {...field} />
                   </FormControl>

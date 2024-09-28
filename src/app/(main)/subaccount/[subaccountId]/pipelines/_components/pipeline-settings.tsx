@@ -18,6 +18,7 @@ import {
 import { deletePipeline } from '@/lib/queries'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 const PipelineSettings = ({
   pipelineId,
@@ -28,23 +29,23 @@ const PipelineSettings = ({
   subaccountId: string
   pipelines: Pipeline[]
 }) => {
+  const t = useTranslations()
+
   const router = useRouter()
   return (
     <AlertDialog>
       <div>
         <div className="flex items-center justify-between mb-4">
           <AlertDialogTrigger asChild>
-            <Button variant={'destructive'}>Delete Pipeline</Button>
+            <Button variant={'destructive'}>{t('deletePipeline')}</Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your account and remove your data from our servers.
-              </AlertDialogDescription>
+              <AlertDialogTitle>{t('areYouAbsolutelySure')}</AlertDialogTitle>
+              <AlertDialogDescription>{t('deletePipelineConfigMessage')}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="items-center">
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
               <AlertDialogAction
                 onClick={async () => {
                   try {
@@ -64,7 +65,7 @@ const PipelineSettings = ({
                   }
                 }}
               >
-                Delete
+                {t('delete')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

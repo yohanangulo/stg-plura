@@ -10,6 +10,7 @@ import db from '@/lib/db'
 import { stripe } from '@/lib/stripe'
 import { AreaChart, BadgeDelta } from '@tremor/react'
 import { ClipboardIcon, Contact2, DollarSign, ShoppingCart } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import React from 'react'
 
@@ -21,6 +22,8 @@ type Props = {
 }
 
 const SubaccountPageId = async ({ params, searchParams }: Props) => {
+  const t = await getTranslations()
+
   let currency = 'USD'
   let sessions
   let totalClosedSessions
@@ -122,38 +125,40 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
           <div className="flex gap-4 flex-col xl:!flex-row">
             <Card className="flex-1 relative">
               <CardHeader>
-                <CardDescription>Income</CardDescription>
+                <CardDescription>{t('income')}</CardDescription>
                 <CardTitle className="text-4xl">{net ? `${currency} ${net.toFixed(2)}` : `$0.00`}</CardTitle>
-                <small className="text-xs text-muted-foreground">For the year {currentYear}</small>
+                <small className="text-xs text-muted-foreground">
+                  {t('forTheYear')} {currentYear}
+                </small>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                Total revenue generated as reflected in your stripe dashboard.
-              </CardContent>
+              <CardContent className="text-sm text-muted-foreground">{t('totalRenevueGeneratedAsStripeDashboard')}</CardContent>
               <DollarSign className="absolute right-4 top-4 text-muted-foreground" />
             </Card>
             <Card className="flex-1 relative">
               <CardHeader>
-                <CardDescription>Potential Income</CardDescription>
+                <CardDescription>{t('pontentialIncome')}</CardDescription>
                 <CardTitle className="text-4xl">
                   {potentialIncome ? `${currency} ${potentialIncome.toFixed(2)}` : `$0.00`}
                 </CardTitle>
-                <small className="text-xs text-muted-foreground">For the year {currentYear}</small>
+                <small className="text-xs text-muted-foreground">
+                  {t('forTheYear')} {currentYear}
+                </small>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">This is how much you can close.</CardContent>
+              <CardContent className="text-sm text-muted-foreground">{t('thisIsHowMuchYouCanClose')}</CardContent>
               <Contact2 className="absolute right-4 top-4 text-muted-foreground" />
             </Card>
             <PipelineValue subaccountId={params.subaccountId} />
 
             <Card className="xl:w-fit">
               <CardHeader>
-                <CardDescription>Conversions</CardDescription>
+                <CardDescription>{t('conversions')}</CardDescription>
                 <CircleProgress
                   value={closingRate}
                   description={
                     <>
                       {sessions && (
                         <div className="flex flex-col">
-                          Total Carts Opened
+                          {t('totalCartsOpened')}
                           <div className="flex gap-2">
                             <ShoppingCart className="text-rose-700" />
                             {sessions.length}
@@ -162,7 +167,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                       )}
                       {totalClosedSessions && (
                         <div className="flex flex-col">
-                          Won Carts
+                          {t('wonCarts')}
                           <div className="flex gap-2">
                             <ShoppingCart className="text-emerald-700" />
                             {totalClosedSessions.length}
@@ -179,19 +184,17 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
           <div className="flex gap-4 flex-col xl:!flex-row">
             <Card className="relative">
               <CardHeader>
-                <CardDescription>Funnel Performance</CardDescription>
+                <CardDescription>{t('funnelPerformance')}</CardDescription>
               </CardHeader>
               <CardContent className=" text-sm text-muted-foreground flex flex-col gap-12 justify-between ">
                 <SubaccountFunnelChart data={funnelPerformanceMetrics} />
-                <div className="lg:w-[150px]">
-                  Total page visits across all funnels. Hover over to get more details on funnel page performance.
-                </div>
+                <div className="lg:w-[150px]">{t('totalVisitsInFunnels')}</div>
               </CardContent>
               <Contact2 className="absolute right-4 top-4 text-muted-foreground" />
             </Card>
             <Card className="p-4 flex-1">
               <CardHeader>
-                <CardTitle>Checkout Activity</CardTitle>
+                <CardTitle>{t('checkOutActivity')}</CardTitle>
               </CardHeader>
               <AreaChart
                 className="text-sm stroke-primary"
@@ -208,7 +211,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
             <Card className="p-4 flex-1 h-[450px] overflow-auto relative">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  Transition History
+                  {t('transactionHistoy')}
                   <BadgeDelta
                     className="rounded-xl bg-transparent"
                     deltaType="moderateIncrease"
@@ -221,10 +224,10 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                 <Table>
                   <TableHeader className="!sticky !top-0">
                     <TableRow>
-                      <TableHead className="w-[300px]">Email</TableHead>
-                      <TableHead className="w-[200px]">Status</TableHead>
-                      <TableHead>Created Date</TableHead>
-                      <TableHead className="text-right">Value</TableHead>
+                      <TableHead className="w-[300px]">{t('email')}</TableHead>
+                      <TableHead className="w-[200px]">{t('status')}</TableHead>
+                      <TableHead>{t('createdDate')}</TableHead>
+                      <TableHead className="text-right">{t('value')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody className="font-medium truncate">
@@ -233,7 +236,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                           <TableRow key={session.id}>
                             <TableCell>{session.customer_details?.email || '-'}</TableCell>
                             <TableCell>
-                              <Badge className="bg-emerald-500 dark:text-black">Paid</Badge>
+                              <Badge className="bg-emerald-500 dark:text-black">{t('paid')}</Badge>
                             </TableCell>
                             <TableCell>{new Date(session.created).toUTCString()}</TableCell>
 

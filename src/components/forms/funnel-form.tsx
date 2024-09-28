@@ -19,6 +19,7 @@ import { useModal } from '@/providers/modal-provider'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import FileUpload from '../global/file-upload'
+import { useTranslations } from 'next-intl'
 
 interface CreateFunnelProps {
   defaultData?: Funnel
@@ -28,6 +29,8 @@ interface CreateFunnelProps {
 //CHALLENGE: Use favicons
 
 const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) => {
+  const t = useTranslations()
+
   const { setClose } = useModal()
   const router = useRouter()
   const form = useForm<z.infer<typeof CreateFunnelFormSchema>>({
@@ -83,7 +86,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
   return (
     <Card className="flex-1">
       <CardHeader>
-        <CardTitle>Funnel Details</CardTitle>
+        <CardTitle>{t('funnelDetails')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -94,7 +97,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Funnel Name</FormLabel>
+                  <FormLabel>{t('funnelName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Name" {...field} />
                   </FormControl>
@@ -107,7 +110,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Funnel Description</FormLabel>
+                  <FormLabel>{t('funnelDescription')}</FormLabel>
                   <FormControl>
                     <Textarea placeholder="Tell us a little bit more about this funnel." {...field} />
                   </FormControl>
@@ -120,7 +123,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
               name="subDomainName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sub domain</FormLabel>
+                  <FormLabel>{t('subDomain')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Sub domain for funnel" {...field} />
                   </FormControl>
@@ -133,7 +136,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
               name="favicon"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Favicon</FormLabel>
+                  <FormLabel>{t('favicon')}</FormLabel>
                   <FormControl>
                     <FileUpload apiEndpoint="subaccountLogo" value={field.value} onChange={field.onChange} />
                   </FormControl>

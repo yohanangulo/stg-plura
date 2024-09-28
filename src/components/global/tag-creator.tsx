@@ -1,4 +1,5 @@
 'use client'
+
 import { Tag } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -28,6 +29,7 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   subAccountId: string
@@ -39,6 +41,8 @@ const TagColors = ['BLUE', 'ORANGE', 'ROSE', 'PURPLE', 'GREEN'] as const
 export type TagColor = (typeof TagColors)[number]
 
 const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
+  const t = useTranslations()
+
   const [selectedTags, setSelectedTags] = useState<Tag[]>(defaultTags || [])
   const [tags, setTags] = useState<Tag[]>([])
   const router = useRouter()
@@ -182,22 +186,20 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle className="text-left">Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription className="text-left">
-                      This action cannot be undone. This will permanently delete your the tag and remove it from our servers.
-                    </AlertDialogDescription>
+                    <AlertDialogTitle className="text-left">{t('areYouAbsolutelySure')}</AlertDialogTitle>
+                    <AlertDialogDescription className="text-left">{t('deleteTagConfMessage')}</AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter className="items-center">
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                     <AlertDialogAction className="bg-destructive" onClick={() => handleDeleteTag(tag.id)}>
-                      Delete Tag
+                      {t('deleteTag')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </CommandItem>
             ))}
           </CommandGroup>
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>{t('noResultsFound')}</CommandEmpty>
         </CommandList>
       </Command>
     </AlertDialog>

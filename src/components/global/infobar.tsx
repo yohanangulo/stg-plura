@@ -11,6 +11,8 @@ import { Card } from '../ui/card'
 import { Switch } from '../ui/switch'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { ModeToggle } from './mode-toggle'
+import { useTranslations } from 'next-intl'
+import LanguageSwitcher from './language-switcher'
 
 type Props = {
   notifications: NotificationWithUser | []
@@ -20,6 +22,8 @@ type Props = {
 }
 
 const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
+  const t = useTranslations()
+
   const [allNotifications, setAllNotifications] = useState(notifications)
   const [showAll, setShowAll] = useState(true)
 
@@ -52,11 +56,11 @@ const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
             </SheetTrigger>
             <SheetContent className="mt-4 mr-4 pr-4 overflow-auto">
               <SheetHeader className="text-left">
-                <SheetTitle>Notifications</SheetTitle>
+                <SheetTitle>{t('notifications')}</SheetTitle>
                 <SheetDescription>
                   {(role === 'AGENCY_ADMIN' || role === 'AGENCY_OWNER') && (
                     <Card className="flex items-center justify-between p-4">
-                      Current Subaccount
+                      {t('currentSubAccount')}
                       <Switch onCheckedChange={handleClick} />
                     </Card>
                   )}
@@ -84,12 +88,13 @@ const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
               ))}
               {allNotifications?.length === 0 && (
                 <div className="flex items-center justify-center text-muted-foreground" mb-4>
-                  You have no notifications
+                  {t('youHaveNoNotifications')}
                 </div>
               )}
             </SheetContent>
           </Sheet>
           <ModeToggle />
+          <LanguageSwitcher />
         </div>
       </div>
     </>

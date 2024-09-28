@@ -17,6 +17,7 @@ import { toast } from '../ui/use-toast'
 import { useModal } from '@/providers/modal-provider'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 
 interface CreatePipelineFormProps {
   defaultData?: Pipeline
@@ -24,6 +25,8 @@ interface CreatePipelineFormProps {
 }
 
 const CreatePipelineForm: React.FC<CreatePipelineFormProps> = ({ defaultData, subAccountId }) => {
+  const t = useTranslations()
+
   const { data, isOpen, setOpen, setClose } = useModal()
   const router = useRouter()
   const form = useForm<z.infer<typeof CreatePipelineFormSchema>>({
@@ -77,7 +80,7 @@ const CreatePipelineForm: React.FC<CreatePipelineFormProps> = ({ defaultData, su
   return (
     <Card className="w-full ">
       <CardHeader>
-        <CardTitle>Pipeline Details</CardTitle>
+        <CardTitle>{t('pipelineDetails')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -88,7 +91,7 @@ const CreatePipelineForm: React.FC<CreatePipelineFormProps> = ({ defaultData, su
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Pipeline Name</FormLabel>
+                  <FormLabel>{t('pipelineName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Name" {...field} />
                   </FormControl>

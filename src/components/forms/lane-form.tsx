@@ -17,6 +17,7 @@ import { toast } from '../ui/use-toast'
 import { useModal } from '@/providers/modal-provider'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 
 interface CreateLaneFormProps {
   defaultData?: Lane
@@ -24,6 +25,8 @@ interface CreateLaneFormProps {
 }
 
 const LaneForm: React.FC<CreateLaneFormProps> = ({ defaultData, pipelineId }) => {
+  const t = useTranslations()
+
   const { setClose } = useModal()
   const router = useRouter()
   const form = useForm<z.infer<typeof LaneFormSchema>>({
@@ -81,7 +84,7 @@ const LaneForm: React.FC<CreateLaneFormProps> = ({ defaultData, pipelineId }) =>
   return (
     <Card className="w-full ">
       <CardHeader>
-        <CardTitle>Lane Details</CardTitle>
+        <CardTitle>{t('laneDetails')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -92,7 +95,7 @@ const LaneForm: React.FC<CreateLaneFormProps> = ({ defaultData, pipelineId }) =>
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lane Name</FormLabel>
+                  <FormLabel>{t('laneName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Lane Name" {...field} />
                   </FormControl>

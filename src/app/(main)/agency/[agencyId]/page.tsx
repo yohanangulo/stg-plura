@@ -6,10 +6,13 @@ import db from '@/lib/db'
 import { stripe } from '@/lib/stripe'
 import { AreaChart } from '@tremor/react'
 import { ClipboardIcon, Contact2, DollarSign, Goal, ShoppingCart } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import React from 'react'
 
 const Page = async ({ params }: { params: { agencyId: string }; searchParams: { code: string } }) => {
+  const t = await getTranslations()
+
   let currency = 'USD'
   let sessions
   let totalClosedSessions
@@ -91,54 +94,60 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
           </Card>
         </div>
       )} */}
-      <h1 className="text-4xl">Dashboard</h1>
+      <h1 className="text-4xl">{'Dashboard'}</h1>
       <Separator className=" my-6" />
       <div className="flex flex-col gap-4 pb-6">
         <div className="flex gap-4 flex-col xl:!flex-row">
           <Card className="flex-1 relative">
             <CardHeader>
-              <CardDescription>Income</CardDescription>
+              <CardDescription>{t('income')}</CardDescription>
               <CardTitle className="text-4xl">{net ? `${currency} ${net.toFixed(2)}` : `$0.00`}</CardTitle>
-              <small className="text-xs text-muted-foreground">For the year {currentYear}</small>
+              <small className="text-xs text-muted-foreground">
+                {t('forTheYear')} {currentYear}
+              </small>
             </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              Total revenue generated as reflected in your stripe dashboard.
-            </CardContent>
+            <CardContent className="text-sm text-muted-foreground">{t('totalRenevueGeneratedAsStripeDashboard')}</CardContent>
             <DollarSign className="absolute right-4 top-4 text-muted-foreground" />
           </Card>
           <Card className="flex-1 relative">
             <CardHeader>
-              <CardDescription>Potential Income</CardDescription>
+              <CardDescription>{t('pontentialIncome')}</CardDescription>
               <CardTitle className="text-4xl">
                 {potentialIncome ? `${currency} ${potentialIncome.toFixed(2)}` : `$0.00`}
               </CardTitle>
-              <small className="text-xs text-muted-foreground">For the year {currentYear}</small>
+              <small className="text-xs text-muted-foreground">
+                {t('forTheYear')} {currentYear}
+              </small>
             </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">This is how much you can close.</CardContent>
+            <CardContent className="text-sm text-muted-foreground">{t('thisIsHowMuchYouCanClose')}</CardContent>
             <DollarSign className="absolute right-4 top-4 text-muted-foreground" />
           </Card>
           <Card className="flex-1 relative">
             <CardHeader>
-              <CardDescription>Active Clients</CardDescription>
+              <CardDescription>{t('activeClients')}</CardDescription>
               <CardTitle className="text-4xl">{subaccounts.length}</CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
-              Reflects the number of sub accounts you own and manage.
+              {t('reflectsTheNumberOfSubAccountsYouOwnAndManage')}
             </CardContent>
             <Contact2 className="absolute right-4 top-4 text-muted-foreground" />
           </Card>
           <Card className="flex-1 relative">
             <CardHeader>
-              <CardTitle>Agency Goal</CardTitle>
+              <CardTitle>{t('agencyGoal')}</CardTitle>
               <CardDescription>
-                <p className="mt-2">Reflects the number of sub accounts you want to own and manage.</p>
+                <p className="mt-2">{t('agencyGoalDescription')}</p>
               </CardDescription>
             </CardHeader>
             <CardFooter>
               <div className="flex flex-col w-full">
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground text-sm">Current: {subaccounts.length}</span>
-                  <span className="text-muted-foreground text-sm">Goal: {agencyDetails.goal}</span>
+                  <span className="text-muted-foreground text-sm">
+                    {t('current')}: {subaccounts.length}
+                  </span>
+                  <span className="text-muted-foreground text-sm">
+                    {t('goal')}: {agencyDetails.goal}
+                  </span>
                 </div>
                 <Progress value={(subaccounts.length / agencyDetails.goal) * 100} />
               </div>
@@ -149,7 +158,7 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
         <div className="flex gap-4 xl:!flex-row flex-col">
           <Card className="p-4 flex-1">
             <CardHeader>
-              <CardTitle>Transaction History</CardTitle>
+              <CardTitle>{t('transactionHistoy')}</CardTitle>
             </CardHeader>
             <AreaChart
               className="text-sm stroke-primary"
@@ -163,7 +172,7 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
           </Card>
           <Card className="xl:w-[400px] w-full">
             <CardHeader>
-              <CardTitle>Conversions</CardTitle>
+              <CardTitle>{t('conversions')}</CardTitle>
             </CardHeader>
             <CardContent>
               <CircleProgress
@@ -172,7 +181,7 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
                   <>
                     {sessions && (
                       <div className="flex flex-col">
-                        Abandoned
+                        {t('abandoned')}
                         <div className="flex gap-2">
                           <ShoppingCart className="text-rose-700" />
                           {sessions.length}
@@ -181,7 +190,7 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
                     )}
                     {totalClosedSessions && (
                       <div className="felx flex-col">
-                        Won Carts
+                        {t('wonCarts')}
                         <div className="flex gap-2">
                           <ShoppingCart className="text-emerald-700" />
                           {totalClosedSessions.length}

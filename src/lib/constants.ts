@@ -30,7 +30,7 @@ import Warning from '@/components/icons/warning'
 export const pricingCards = [
   {
     title: 'Starter',
-    description: 'Perfect for trying out plura',
+    description: 'Perfect for trying out 2 Sto',
     price: 'Free',
     duration: '',
     highlight: 'Key features',
@@ -57,9 +57,7 @@ export const pricingCards = [
   },
 ]
 
-export const addOnProducts = [
-  { title: 'Priority Support', id: 'prod_PNjJAE2EpP16pn' },
-]
+export const addOnProducts = [{ title: 'Priority Support', id: 'prod_PNjJAE2EpP16pn' }]
 
 export const icons = [
   {

@@ -1,4 +1,5 @@
 'use client'
+
 import { getSubAccountTeamMembers, saveActivityLogsNotification, searchContacts, upsertTicket } from '@/lib/queries'
 import { TicketFormSchema, TicketWithTags } from '@/lib/types'
 import { useModal } from '@/providers/modal-provider'
@@ -22,6 +23,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '
 import { cn } from '@/lib/utils'
 import Loading from '../global/loading'
 import TagCreator from '../global/tag-creator'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   laneId: string
@@ -30,6 +32,8 @@ type Props = {
 }
 
 const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
+  const t = useTranslations()
+
   const { data: defaultData, setClose } = useModal()
   const router = useRouter()
   const [tags, setTags] = useState<Tag[]>([])
@@ -119,7 +123,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Ticket Details</CardTitle>
+        <CardTitle>{t('ticketDetails')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -130,7 +134,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ticket Name</FormLabel>
+                  <FormLabel>{t('ticketName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Name" {...field} />
                   </FormControl>
@@ -144,7 +148,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
                     <Textarea placeholder="Description" {...field} />
                   </FormControl>
@@ -158,7 +162,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
               name="value"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ticket Value</FormLabel>
+                  <FormLabel>{t('ticketValue')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Value" {...field} />
                   </FormControl>
@@ -166,9 +170,9 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
                 </FormItem>
               )}
             />
-            <h3>Add tags</h3>
+            <h3>{t('addTags')}</h3>
             <TagCreator subAccountId={subaccountId} getSelectedTags={setTags} defaultTags={defaultData.ticket?.Tags || []} />
-            <FormLabel>Assigned To Team Member</FormLabel>
+            <FormLabel>{t('assignedToATeamMember')}</FormLabel>
             <Select onValueChange={setAssignedTo} defaultValue={assignedTo}>
               <SelectTrigger>
                 <SelectValue
@@ -181,7 +185,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
                         </AvatarFallback>
                       </Avatar>
 
-                      <span className="text-sm text-muted-foreground">Not Assigned</span>
+                      <span className="text-sm text-muted-foreground">{t('notAssigned')}</span>
                     </div>
                   }
                 />
@@ -203,7 +207,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
                 ))}
               </SelectContent>
             </Select>
-            <FormLabel>Customer</FormLabel>
+            <FormLabel>{t('customer')}</FormLabel>
             <Popover>
               <PopoverTrigger asChild className="w-full">
                 <Button variant="outline" role="combobox" className="justify-between">
@@ -231,7 +235,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
                       }, 1000)
                     }}
                   />
-                  <CommandEmpty>No Customer found.</CommandEmpty>
+                  <CommandEmpty>{t('noCustomerFound')}</CommandEmpty>
                   <CommandGroup>
                     {contactList.map(c => (
                       <CommandItem

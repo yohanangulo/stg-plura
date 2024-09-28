@@ -30,6 +30,7 @@ import { Switch } from '../ui/switch'
 import { deleteAgency, initUser, saveActivityLogsNotification, updateAgencyDetails, upsertAgency } from '@/lib/queries'
 import { Button } from '../ui/button'
 import Loading from '../global/loading'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   data?: Partial<Agency>
@@ -49,6 +50,8 @@ const FormSchema = z.object({
 })
 
 const AgencyDetails = ({ data }: Props) => {
+  const t = useTranslations()
+
   console.log(data, 'data 🚀🚀')
   const { toast } = useToast()
   const router = useRouter()
@@ -178,10 +181,8 @@ const AgencyDetails = ({ data }: Props) => {
     <AlertDialog>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Agency Information</CardTitle>
-          <CardDescription>
-            Lets create an agency for you business. You can edit agency settings later from the agency settings tab.
-          </CardDescription>
+          <CardTitle>{t('agencyInfo')}</CardTitle>
+          <CardDescription>{t('letsCreateAnAgencyForYourBusiness')}</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -192,7 +193,7 @@ const AgencyDetails = ({ data }: Props) => {
                 name="agencyLogo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Agency Logo</FormLabel>
+                    <FormLabel>{t('agencyLogo')}</FormLabel>
                     <FormControl>
                       <FileUpload apiEndpoint="agencyLogo" onChange={field.onChange} value={field.value} />
                     </FormControl>
@@ -207,7 +208,7 @@ const AgencyDetails = ({ data }: Props) => {
                   name="name"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Agency Name</FormLabel>
+                      <FormLabel>{t('agencyName')}</FormLabel>
                       <FormControl>
                         <Input placeholder="Your agency name" {...field} />
                       </FormControl>
@@ -220,7 +221,7 @@ const AgencyDetails = ({ data }: Props) => {
                   name="companyEmail"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Agency Email</FormLabel>
+                      <FormLabel>{t('agencyEmail')}</FormLabel>
                       <FormControl>
                         <Input readOnly placeholder="Email" {...field} />
                       </FormControl>
@@ -236,7 +237,7 @@ const AgencyDetails = ({ data }: Props) => {
                   name="companyPhone"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Agency Phone Number</FormLabel>
+                      <FormLabel>{t('agencyPhoneNumber')}</FormLabel>
                       <FormControl>
                         <Input placeholder="Phone" {...field} />
                       </FormControl>
@@ -254,11 +255,8 @@ const AgencyDetails = ({ data }: Props) => {
                   return (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border gap-4 p-4">
                       <div>
-                        <FormLabel>Whitelabel Agency</FormLabel>
-                        <FormDescription>
-                          Turning on whilelabel mode will show your agency logo to all sub accounts by default. You can overwrite
-                          this functionality through sub account settings.
-                        </FormDescription>
+                        <FormLabel>{t('whiteLabelAgency')}</FormLabel>
+                        <FormDescription>{t('turninigOnWhiteLabelAgency')}</FormDescription>
                       </div>
 
                       <FormControl>
@@ -274,7 +272,7 @@ const AgencyDetails = ({ data }: Props) => {
                 name="address"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel>{t('address')}</FormLabel>
                     <FormControl>
                       <Input placeholder="123 st..." {...field} />
                     </FormControl>
@@ -289,7 +287,7 @@ const AgencyDetails = ({ data }: Props) => {
                   name="city"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>City</FormLabel>
+                      <FormLabel>{t('city')}</FormLabel>
                       <FormControl>
                         <Input placeholder="City" {...field} />
                       </FormControl>
@@ -303,7 +301,7 @@ const AgencyDetails = ({ data }: Props) => {
                   name="state"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>State</FormLabel>
+                      <FormLabel>{t('state')}</FormLabel>
                       <FormControl>
                         <Input placeholder="State" {...field} />
                       </FormControl>
@@ -317,7 +315,7 @@ const AgencyDetails = ({ data }: Props) => {
                   name="zipCode"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Zipcpde</FormLabel>
+                      <FormLabel>{t('zipCode')}</FormLabel>
                       <FormControl>
                         <Input placeholder="Zipcode" {...field} />
                       </FormControl>
@@ -332,7 +330,7 @@ const AgencyDetails = ({ data }: Props) => {
                 name="country"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Country</FormLabel>
+                    <FormLabel>{t('country')}</FormLabel>
                     <FormControl>
                       <Input placeholder="Country" {...field} />
                     </FormControl>
@@ -342,11 +340,8 @@ const AgencyDetails = ({ data }: Props) => {
               />
               {data?.id && (
                 <div className="flex flex-col gap-2">
-                  <FormLabel>Create A Goal</FormLabel>
-                  <FormDescription>
-                    ✨ Create a goal for your agency. As your business grows your goals grow too so dont forget to set the bar
-                    higher!
-                  </FormDescription>
+                  <FormLabel>{t('createAGoal')}</FormLabel>
+                  <FormDescription>{t('createAGoalDescription')}</FormDescription>
                   <NumberInput
                     defaultValue={data?.goal}
                     onValueChange={async val => {
@@ -374,12 +369,9 @@ const AgencyDetails = ({ data }: Props) => {
           {data?.id && (
             <div className="flex flex-row items-center justify-between rounded-lg border border-destructive gap-4 p-4 mt-4">
               <div>
-                <div>Danger Zone</div>
+                <div>{t('dangerZone')}</div>
               </div>
-              <div className="text-muted-foreground">
-                Deleting your agency cannpt be undone. This will also delete all sub accounts and all data related to your sub
-                accounts. Sub accounts will no longer have access to funnels, contacts etc.
-              </div>
+              <div className="text-muted-foreground">{t('dangerZoneMessage')}</div>
               <AlertDialogTrigger
                 disabled={isLoading || deletingAgency}
                 className="text-red-600 p-2 text-center mt-2 rounded-md hove:bg-red-600 hover:text-white whitespace-nowrap"
@@ -390,19 +382,17 @@ const AgencyDetails = ({ data }: Props) => {
           )}
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-left">Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription className="text-left">
-                This action cannot be undone. This will permanently delete the Agency account and all related sub accounts.
-              </AlertDialogDescription>
+              <AlertDialogTitle className="text-left">{t('areYouAbsolutelySure')}</AlertDialogTitle>
+              <AlertDialogDescription className="text-left">{t('deleteAgencyConfMessage')}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex items-center">
-              <AlertDialogCancel className="mb-2">Cancel</AlertDialogCancel>
+              <AlertDialogCancel className="mb-2">{t('cancel')}</AlertDialogCancel>
               <AlertDialogAction
                 disabled={deletingAgency}
                 className="bg-destructive hover:bg-destructive"
                 onClick={handleDeleteAgency}
               >
-                Delete
+                {t('delete')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

@@ -1,9 +1,11 @@
 'use client'
+/* eslint-disable react-hooks/rules-of-hooks */
 
 import clsx from 'clsx'
 import { ColumnDef } from '@tanstack/react-table'
 import { Agency, AgencySidebarOption, Permissions, Prisma, Role, SubAccount, User } from '@prisma/client'
 import Image from 'next/image'
+import { getTranslations } from 'next-intl/server'
 
 import { Badge } from '@/components/ui/badge'
 import {
@@ -32,10 +34,11 @@ import UserDetails from '@/components/forms/user-details'
 
 import { deleteUser, getUser } from '@/lib/queries'
 import { useToast } from '@/components/ui/use-toast'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { UsersWithAgencySubAccountPermissionsSidebarOptions } from '@/lib/types'
 import CustomModal from '@/components/global/custom-modal'
+import { useTranslations } from 'next-intl'
 
 export const columns: ColumnDef<UsersWithAgencySubAccountPermissionsSidebarOptions>[] = [
   {
@@ -71,8 +74,11 @@ export const columns: ColumnDef<UsersWithAgencySubAccountPermissionsSidebarOptio
 
   {
     accessorKey: 'SubAccount',
-    header: 'Owned Accounts',
+    header: () => useTranslations()('ownedAccounts'),
+    // header: 'Owned Accounts',
     cell: ({ row }) => {
+      const t = useTranslations()
+
       const isAgencyOwner = row.getValue('role') === 'AGENCY_OWNER'
       const ownedAccounts = row.original?.Permissions.filter(per => per.access)
 
@@ -80,7 +86,9 @@ export const columns: ColumnDef<UsersWithAgencySubAccountPermissionsSidebarOptio
         return (
           <div className="flex flex-col items-start">
             <div className="flex flex-col gap-2">
-              <Badge className="bg-slate-600 whitespace-nowrap">Agency - {row?.original?.Agency?.name}</Badge>
+              <Badge className="bg-slate-600 whitespace-nowrap">
+                {t('agency')} - {row?.original?.Agency?.name}
+              </Badge>
             </div>
           </div>
         )
@@ -90,11 +98,11 @@ export const columns: ColumnDef<UsersWithAgencySubAccountPermissionsSidebarOptio
             {ownedAccounts?.length ? (
               ownedAccounts.map(account => (
                 <Badge key={account.id} className="bg-slate-600 w-fit whitespace-nowrap">
-                  Sub Account - {account.SubAccount.name}
+                  {t('subAccount')} - {account.SubAccount.name}
                 </Badge>
               ))
             ) : (
-              <div className="text-muted-foreground">No Access Yet</div>
+              <div className="text-muted-foreground">{t('noAccessYet')}</div>
             )}
           </div>
         </div>
@@ -134,7 +142,9 @@ interface CellActionsProps {
   rowData: UsersWithAgencySubAccountPermissionsSidebarOptions
 }
 
-const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
+const CellActions: React.FC<CellActionsProps> = async ({ rowData }) => {
+  const t = useTranslations()
+
   const { data, setOpen } = useModal()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
@@ -147,14 +157,14 @@ const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">{t('openMenu')}</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
           <DropdownMenuItem className="flex gap-2" onClick={() => navigator.clipboard.writeText(rowData?.email)}>
-            <Copy size={15} /> Copy Email
+            <Copy size={15} /> {t('copyEmail')}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
@@ -174,12 +184,12 @@ const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
             }}
           >
             <Edit size={15} />
-            Edit Details
+            {t('editDetails')}
           </DropdownMenuItem>
           {rowData.role !== 'AGENCY_OWNER' && (
             <AlertDialogTrigger asChild>
               <DropdownMenuItem className="flex gap-2" onClick={() => {}}>
-                <Trash size={15} /> Remove User
+                <Trash size={15} /> {t('removeUser')}
               </DropdownMenuItem>
             </AlertDialogTrigger>
           )}
@@ -187,13 +197,11 @@ const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
       </DropdownMenu>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-left">Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription className="text-left">
-            This action cannot be undone. This will permanently delete the user and related data.
-          </AlertDialogDescription>
+          <AlertDialogTitle className="text-left">{t('areYouAbsolutelySure')}</AlertDialogTitle>
+          <AlertDialogDescription className="text-left">{t('deleteUserConfMessage')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex items-center">
-          <AlertDialogCancel className="mb-2">Cancel</AlertDialogCancel>
+          <AlertDialogCancel className="mb-2">{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction
             disabled={loading}
             className="bg-destructive hover:bg-destructive"
@@ -208,7 +216,7 @@ const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
               router.refresh()
             }}
           >
-            Delete
+            {t('delete')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

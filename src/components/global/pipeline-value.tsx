@@ -6,12 +6,15 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader } from '../ui/card'
 import { Progress } from '../ui/progress'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   subaccountId: string
 }
 
 const PipelineValue = ({ subaccountId }: Props) => {
+  const t = useTranslations()
+
   const [pipelines, setPipelines] = useState<Prisma.PromiseReturnType<typeof getPipelines>>([])
 
   const [selectedPipelineId, setselectedPipelineId] = useState('')
@@ -52,30 +55,33 @@ const PipelineValue = ({ subaccountId }: Props) => {
   return (
     <Card className="relative w-full xl:w-[350px]">
       <CardHeader>
-        <CardDescription>Pipeline Value</CardDescription>
-        <small className="text-xs text-muted-foreground">Pipeline Progress</small>
+        <CardDescription>{t('pipelineValue')}</CardDescription>
+        <small className="text-xs text-muted-foreground">{t('pipelineProgress')}</small>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-muted-foreground">Closed ${pipelineClosedValue}</p>
+            <p className="text-xs text-muted-foreground">
+              {t('closed')} {'$'}
+              {pipelineClosedValue}
+            </p>
           </div>
           <div>
-            <p className="text-xs text-muted-foreground">Total ${totalPipelineValue + pipelineClosedValue}</p>
+            <p className="text-xs text-muted-foreground">
+              {t('total')} {'$'}
+              {totalPipelineValue + pipelineClosedValue}
+            </p>
           </div>
         </div>
         <Progress color="green" value={pipelineRate} className="h-2" />
       </CardHeader>
       <CardContent className="text-sm text-muted-foreground">
-        <p className="mb-2">
-          Total value of all tickets in the given pipeline except the last lane. Your last lane is considered your closing lane in
-          every pipeline.
-        </p>
+        <p className="mb-2">{t('totalValueOfAllTickets')}</p>
         <Select value={selectedPipelineId} onValueChange={setselectedPipelineId}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select a pipeline" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Pipelines</SelectLabel>
+              <SelectLabel>{t('pipelines')}</SelectLabel>
               {pipelines.map(pipeline => (
                 <SelectItem value={pipeline.id} key={pipeline.id}>
                   {pipeline.name}

@@ -8,10 +8,12 @@ import TwoColumnsPlaceholder from './two-columns-placeholder'
 import LinkPlaceholder from './link-placeholder'
 import ContactFormComponentPlaceholder from './contact-form-placeholder'
 import CheckoutPlaceholder from './checkout-placeholder'
+import { useTranslations } from 'next-intl'
 
 type Props = {}
 
 const ComponentsTab = (props: Props) => {
+  const t = useTranslations()
   const elements: {
     Component: React.ReactNode
     label: string
@@ -66,7 +68,7 @@ const ComponentsTab = (props: Props) => {
   return (
     <Accordion type="multiple" className="w-full" defaultValue={['Layout', 'Elements']}>
       <AccordionItem value="Layout" className="px-6 py-0 border-y-[1px]">
-        <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
+        <AccordionTrigger className="!no-underline">{t('layout')}</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-2 ">
           {elements
             .filter(element => element.group === 'layout')
@@ -79,7 +81,7 @@ const ComponentsTab = (props: Props) => {
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Elements" className="px-6 py-0 ">
-        <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
+        <AccordionTrigger className="!no-underline">{t('elements')}</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-2 ">
           {elements
             .filter(element => element.group === 'elements')

@@ -1,8 +1,10 @@
 'use client'
+
 import ContactUserForm from '@/components/forms/contact-user-form'
 import CustomModal from '@/components/global/custom-modal'
 import { Button } from '@/components/ui/button'
 import { useModal } from '@/providers/modal-provider'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 type Props = {
@@ -10,6 +12,7 @@ type Props = {
 }
 
 const CraeteContactButton = ({ subaccountId }: Props) => {
+  const t = useTranslations()
   const { setOpen } = useModal()
 
   const handleCreateContact = async () => {
@@ -20,7 +23,7 @@ const CraeteContactButton = ({ subaccountId }: Props) => {
     )
   }
 
-  return <Button onClick={handleCreateContact}>Create Contact</Button>
+  return <Button onClick={handleCreateContact}>{t('createContact')}</Button>
 }
 
 export default CraeteContactButton

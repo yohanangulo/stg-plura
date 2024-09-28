@@ -3,25 +3,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { saveActivityLogsNotification, upsertFunnelPage } from '@/lib/queries'
 import { DeviceTypes, useEditor } from '@/providers/editor/editor-provider'
 import { FunnelPage } from '@prisma/client'
 import clsx from 'clsx'
-import {
-  ArrowLeftCircle,
-  EyeIcon,
-  Laptop,
-  Redo2,
-  Smartphone,
-  Tablet,
-  Undo2,
-} from 'lucide-react'
+import { ArrowLeftCircle, EyeIcon, Laptop, Redo2, Smartphone, Tablet, Undo2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FocusEventHandler, useEffect } from 'react'
@@ -33,11 +21,8 @@ type Props = {
   subaccountId: string
 }
 
-const FunnelEditorNavigation = ({
-  funnelId,
-  funnelPageDetails,
-  subaccountId,
-}: Props) => {
+const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: Props) => {
+  const t = useTranslations()
   const router = useRouter()
   const { state, dispatch } = useEditor()
 
@@ -48,9 +33,7 @@ const FunnelEditorNavigation = ({
     })
   }, [funnelPageDetails])
 
-  const handleOnBlurTitleChange: FocusEventHandler<HTMLInputElement> = async (
-    event
-  ) => {
+  const handleOnBlurTitleChange: FocusEventHandler<HTMLInputElement> = async event => {
     if (event.target.value === funnelPageDetails.name) return
     if (event.target.value) {
       await upsertFunnelPage(
@@ -60,7 +43,7 @@ const FunnelEditorNavigation = ({
           name: event.target.value,
           order: funnelPageDetails.order,
         },
-        funnelId
+        funnelId,
       )
 
       toast('Success', {
@@ -97,7 +80,7 @@ const FunnelEditorNavigation = ({
           ...funnelPageDetails,
           content,
         },
-        funnelId
+        funnelId,
       )
       await saveActivityLogsNotification({
         agencyId: undefined,
@@ -117,10 +100,9 @@ const FunnelEditorNavigation = ({
   return (
     <TooltipProvider>
       <nav
-        className={clsx(
-          'border-b-[1px] flex items-center justify-between p-6 gap-2 transition-all',
-          { '!h-0 !p-0 !overflow-hidden': state.editor.previewMode }
-        )}
+        className={clsx('border-b-[1px] flex items-center justify-between p-6 gap-2 transition-all', {
+          '!h-0 !p-0 !overflow-hidden': state.editor.previewMode,
+        })}
       >
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
           <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
@@ -133,7 +115,9 @@ const FunnelEditorNavigation = ({
               onBlur={handleOnBlurTitleChange}
             />
             <span className="text-sm text-muted-foreground">
-              Path: /{funnelPageDetails.pathName}
+              {t('path')}
+              {': /'}
+              {funnelPageDetails.pathName}
             </span>
           </div>
         </aside>
@@ -142,7 +126,7 @@ const FunnelEditorNavigation = ({
             defaultValue="Desktop"
             className="w-fit "
             value={state.editor.device}
-            onValueChange={(value) => {
+            onValueChange={value => {
               dispatch({
                 type: 'CHANGE_DEVICE',
                 payload: { device: value as DeviceTypes },
@@ -152,53 +136,39 @@ const FunnelEditorNavigation = ({
             <TabsList className="grid w-full grid-cols-3 bg-transparent h-fit">
               <Tooltip>
                 <TooltipTrigger>
-                  <TabsTrigger
-                    value="Desktop"
-                    className="data-[state=active]:bg-muted w-10 h-10 p-0"
-                  >
+                  <TabsTrigger value="Desktop" className="data-[state=active]:bg-muted w-10 h-10 p-0">
                     <Laptop />
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Desktop</p>
+                  <p>{t('desktop')}</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger>
-                  <TabsTrigger
-                    value="Tablet"
-                    className="w-10 h-10 p-0 data-[state=active]:bg-muted"
-                  >
+                  <TabsTrigger value="Tablet" className="w-10 h-10 p-0 data-[state=active]:bg-muted">
                     <Tablet />
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Tablet</p>
+                  <p>{t('tablet')}</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger>
-                  <TabsTrigger
-                    value="Mobile"
-                    className="w-10 h-10 p-0 data-[state=active]:bg-muted"
-                  >
+                  <TabsTrigger value="Mobile" className="w-10 h-10 p-0 data-[state=active]:bg-muted">
                     <Smartphone />
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Mobile</p>
+                  <p>{t('mobile')}</p>
                 </TooltipContent>
               </Tooltip>
             </TabsList>
           </Tabs>
         </aside>
         <aside className="flex items-center gap-2">
-          <Button
-            variant={'ghost'}
-            size={'icon'}
-            className="hover:bg-slate-800"
-            onClick={handlePreviewClick}
-          >
+          <Button variant={'ghost'} size={'icon'} className="hover:bg-slate-800" onClick={handlePreviewClick}>
             <EyeIcon />
           </Button>
           <Button
@@ -211,9 +181,7 @@ const FunnelEditorNavigation = ({
             <Undo2 />
           </Button>
           <Button
-            disabled={
-              !(state.history.currentIndex < state.history.history.length - 1)
-            }
+            disabled={!(state.history.currentIndex < state.history.history.length - 1)}
             onClick={handleRedo}
             variant={'ghost'}
             size={'icon'}
@@ -223,18 +191,15 @@ const FunnelEditorNavigation = ({
           </Button>
           <div className="flex flex-col item-center mr-4">
             <div className="flex flex-row items-center gap-4">
-              Draft
-              <Switch
-                disabled
-                defaultChecked={true}
-              />
-              Publish
+              {t('draft')}
+              <Switch disabled defaultChecked={true} />
+              {t('publish')}
             </div>
             <span className="text-muted-foreground text-sm">
-              Last updated {funnelPageDetails.updatedAt.toLocaleDateString()}
+              {t('lastUpdated')} {funnelPageDetails.updatedAt.toLocaleDateString()}
             </span>
           </div>
-          <Button onClick={handleOnSave}>Save</Button>
+          <Button onClick={handleOnSave}>{t('save')}</Button>
         </aside>
       </nav>
     </TooltipProvider>
