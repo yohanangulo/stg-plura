@@ -20,7 +20,7 @@ const MediaUploadButton = ({ subaccountId }: Props) => {
     <Button
       onClick={() => {
         setOpen(
-          <CustomModal title="Upload Media" subheading="Upload a file to your media bucket">
+          <CustomModal title={t('uploadMedia')} subheading={t('uploadFileToMedia')}>
             <UploadMediaForm subaccountId={subaccountId}></UploadMediaForm>
           </CustomModal>,
         )

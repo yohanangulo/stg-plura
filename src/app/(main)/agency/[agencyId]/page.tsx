@@ -94,7 +94,12 @@ const Page = async ({ params }: { params: { agencyId: string }; searchParams: { 
           </Card>
         </div>
       )} */}
-      <h1 className="text-4xl">{'Dashboard'}</h1>
+      <h1 className="text-4xl">
+        {
+          // eslint-disable-next-line i18next/no-literal-string
+          'Dashboard'
+        }
+      </h1>
       <Separator className=" my-6" />
       <div className="flex flex-col gap-4 pb-6">
         <div className="flex gap-4 flex-col xl:!flex-row">

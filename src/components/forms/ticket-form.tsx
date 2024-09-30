@@ -105,16 +105,16 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
       })
 
       toast({
-        title: 'Success',
-        description: 'Saved  details',
+        title: t('success'),
+        description: t('savedDetails'),
       })
       if (response) getNewTicket(response)
       router.refresh()
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not save pipeline details',
+        title: t('oops'),
+        description: t('couldNotSavePipelineDetails'),
       })
     }
     setClose()
@@ -136,7 +136,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
                 <FormItem>
                   <FormLabel>{t('ticketName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Name" {...field} />
+                    <Input placeholder={t('name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -150,7 +150,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
                 <FormItem>
                   <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Description" {...field} />
+                    <Textarea placeholder={t('description')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -164,7 +164,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
                 <FormItem>
                   <FormLabel>{t('ticketValue')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Value" {...field} />
+                    <Input placeholder={t('value')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -254,7 +254,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
               </PopoverContent>
             </Popover>
             <Button className="w-20 mt-4" disabled={isLoading} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Save'}
+              {form.formState.isSubmitting ? <Loading /> : t('save')}
             </Button>
           </form>
         </Form>

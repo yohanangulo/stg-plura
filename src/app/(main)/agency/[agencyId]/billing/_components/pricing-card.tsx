@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { PricesList } from '@/lib/types'
 import { useModal } from '@/providers/modal-provider'
+import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
@@ -35,13 +36,15 @@ const PricingCard = ({
   prices,
   title,
 }: Props) => {
+  const t = useTranslations()
+
   const { setOpen } = useModal()
   const searchParams = useSearchParams()
   const plan = searchParams.get('plan')
 
   const handleManagePlan = async () => {
     setOpen(
-      <CustomModal title={'Manage Your Plan'} subheading="You can change your plan at any time from the billings settings">
+      <CustomModal title={t('manageYourPlan')} subheading={t('manageYourPlanSubHeading')}>
         <SubscriptionFormWrapper customerId={customerId} planExists={planExists} />
       </CustomModal>,
       async () => ({

@@ -50,7 +50,7 @@ export const columns: ColumnDef<UsersWithAgencySubAccountPermissionsSidebarOptio
   },
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: () => useTranslations()('name'),
     cell: ({ row }) => {
       const avatarUrl = row.getValue('avatarUrl') as string
       return (
@@ -70,7 +70,7 @@ export const columns: ColumnDef<UsersWithAgencySubAccountPermissionsSidebarOptio
       return null
     },
   },
-  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'email', header: () => useTranslations()('email') },
 
   {
     accessorKey: 'SubAccount',
@@ -111,7 +111,7 @@ export const columns: ColumnDef<UsersWithAgencySubAccountPermissionsSidebarOptio
   },
   {
     accessorKey: 'role',
-    header: 'Role',
+    header: () => useTranslations()('role'),
     cell: ({ row }) => {
       const role: Role = row.getValue('role')
       return (
@@ -171,10 +171,7 @@ const CellActions: React.FC<CellActionsProps> = async ({ rowData }) => {
             className="flex gap-2"
             onClick={() => {
               setOpen(
-                <CustomModal
-                  subheading="You can change permissions only when the user has an owned subaccount"
-                  title="Edit User Details"
-                >
+                <CustomModal subheading={t('youCanChangePermissions')} title={t('editUserDetails')}>
                   <UserDetails type="agency" id={rowData?.Agency?.id || null} subAccounts={rowData?.Agency?.SubAccount} />
                 </CustomModal>,
                 async () => {
@@ -209,8 +206,8 @@ const CellActions: React.FC<CellActionsProps> = async ({ rowData }) => {
               setLoading(true)
               await deleteUser(rowData.id)
               toast({
-                title: 'Deleted User',
-                description: 'The user has been deleted from this agency they no longer have access to the agency',
+                title: t('deletedUser'),
+                description: t('theUserHasBeenDeleted'),
               })
               setLoading(false)
               router.refresh()

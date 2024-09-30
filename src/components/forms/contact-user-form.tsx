@@ -55,16 +55,16 @@ const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
         subaccountId: subaccountId,
       })
       toast({
-        title: 'Success',
-        description: 'Contact details saved',
+        title: t('success'),
+        description: t('contactsDetailsSaved'),
       })
       setClose()
       router.refresh()
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not save contact details',
+        title: t('oops'),
+        description: t('couldNotSaveContactDetails'),
       })
     }
   }
@@ -86,7 +86,7 @@ const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
                 <FormItem>
                   <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Name" {...field} />
+                    <Input placeholder={t('name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,7 +100,7 @@ const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
                 <FormItem>
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Email" {...field} />
+                    <Input type="email" placeholder={t('email')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,7 +108,7 @@ const ContactUserForm: React.FC<ContactUserFormProps> = ({ subaccountId }) => {
             />
 
             <Button className="mt-4" disabled={isLoading} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Save Contact Details!'}
+              {form.formState.isSubmitting ? <Loading /> : t('saveContactDetails')}
             </Button>
           </form>
         </Form>

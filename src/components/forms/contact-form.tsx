@@ -48,7 +48,7 @@ const ContactForm = ({ apiCall, subTitle, title }: Props) => {
                 <FormItem>
                   <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Name" {...field} />
+                    <Input placeholder={t('name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -62,14 +62,14 @@ const ContactForm = ({ apiCall, subTitle, title }: Props) => {
                 <FormItem>
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Email" {...field} />
+                    <Input type="email" placeholder={t('email')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button className="mt-4" disabled={isLoading} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Get a free quote!'}
+              {form.formState.isSubmitting ? <Loading /> : t('getAFreeQuote')}
             </Button>
           </form>
         </Form>

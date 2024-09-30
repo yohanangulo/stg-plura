@@ -140,7 +140,7 @@ const AgencyDetails = ({ data }: Props) => {
         goal: 5,
       })
       toast({
-        title: 'Created Agency',
+        title: t('createdAgency'),
       })
       if (data?.id) return router.refresh()
       if (response) {
@@ -150,8 +150,8 @@ const AgencyDetails = ({ data }: Props) => {
       console.log(error)
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'could not create your agency',
+        title: t('oops'),
+        description: t('couldNotCreateYourAgency'),
       })
     }
   }
@@ -162,16 +162,16 @@ const AgencyDetails = ({ data }: Props) => {
     try {
       const response = await deleteAgency(data.id)
       toast({
-        title: 'Deleted Agency',
-        description: 'Deleted your agency and all subaccounts',
+        title: t('deletedAgency'),
+        description: t('deletedYourAgencyAndSubaccounts'),
       })
       router.refresh()
     } catch (error) {
       console.log(error)
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'could not delete your agency ',
+        title: t('oops'),
+        description: t('couldNotDeleteYourAgency'),
       })
     }
     setDeletingAgency(false)
@@ -210,7 +210,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>{t('agencyName')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your agency name" {...field} />
+                        <Input placeholder={t('yourAgencyName')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -223,7 +223,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>{t('agencyEmail')}</FormLabel>
                       <FormControl>
-                        <Input readOnly placeholder="Email" {...field} />
+                        <Input readOnly placeholder={t('email')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -239,7 +239,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>{t('agencyPhoneNumber')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Phone" {...field} />
+                        <Input placeholder={t('phone')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -289,7 +289,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>{t('city')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="City" {...field} />
+                        <Input placeholder={t('city')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -303,7 +303,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>{t('state')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="State" {...field} />
+                        <Input placeholder={t('state')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -317,7 +317,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>{t('zipCode')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Zipcode" {...field} />
+                        <Input placeholder={t('zipCode')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -332,7 +332,7 @@ const AgencyDetails = ({ data }: Props) => {
                   <FormItem className="flex-1">
                     <FormLabel>{t('country')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Country" {...field} />
+                      <Input placeholder={t('country')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -349,19 +349,19 @@ const AgencyDetails = ({ data }: Props) => {
                       await updateAgencyDetails(data.id, { goal: val })
                       await saveActivityLogsNotification({
                         agencyId: data.id,
-                        description: `Updated the agency goal to | ${val} Sub Account`,
+                        description: `Updated the agency goal to Sub Account | ${val}`,
                         subaccountId: undefined,
                       })
                       router.refresh()
                     }}
                     min={1}
                     className="bg-background !border !border-input"
-                    placeholder="Sub Account Goal"
+                    placeholder={t('subAccountGoal')}
                   />
                 </div>
               )}
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? <Loading /> : 'Save Agency Information'}
+                {isLoading ? <Loading /> : t('saveAgencyInfo')}
               </Button>
             </form>
           </Form>
@@ -376,7 +376,7 @@ const AgencyDetails = ({ data }: Props) => {
                 disabled={isLoading || deletingAgency}
                 className="text-red-600 p-2 text-center mt-2 rounded-md hove:bg-red-600 hover:text-white whitespace-nowrap"
               >
-                {deletingAgency ? 'Deleting...' : 'Delete Agency'}
+                {deletingAgency ? t('deleting') : t('deleteAgency')}
               </AlertDialogTrigger>
             </div>
           )}

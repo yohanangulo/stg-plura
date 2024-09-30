@@ -43,7 +43,7 @@ const PipelineView = ({ lanes, pipelineDetails, pipelineId, subaccountId, update
 
   const handleAddLane = () => {
     setOpen(
-      <CustomModal title=" Create A Lane" subheading="Lanes allow you to group tickets">
+      <CustomModal title={t('createALane')} subheading={t('createLaneSubHeading')}>
         <LaneForm pipelineId={pipelineId} />
       </CustomModal>,
     )

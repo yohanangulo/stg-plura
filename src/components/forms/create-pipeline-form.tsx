@@ -63,15 +63,15 @@ const CreatePipelineForm: React.FC<CreatePipelineFormProps> = ({ defaultData, su
       })
 
       toast({
-        title: 'Success',
-        description: 'Saved pipeline details',
+        title: t('success'),
+        description: t('savedPipelinesDetails'),
       })
       router.refresh()
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not save pipeline details',
+        title: t('oops'),
+        description: t('couldNotSavePipelinesDetails'),
       })
     }
 
@@ -93,7 +93,7 @@ const CreatePipelineForm: React.FC<CreatePipelineFormProps> = ({ defaultData, su
                 <FormItem>
                   <FormLabel>{t('pipelineName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Name" {...field} />
+                    <Input placeholder={t('name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,7 +101,7 @@ const CreatePipelineForm: React.FC<CreatePipelineFormProps> = ({ defaultData, su
             />
 
             <Button className="w-20 mt-4" disabled={isLoading} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Save'}
+              {form.formState.isSubmitting ? <Loading /> : t('save')}
             </Button>
           </form>
         </Form>

@@ -104,17 +104,17 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
     if (type === 'agency') {
       await saveActivityLogsNotification({
         agencyId: authUserData?.Agency?.id,
-        description: `Gave ${userData?.name} access to | ${
+        description: `Access given | ${userData?.name} -> ${
           subAccountPermissions?.Permissions.find(p => p.subAccountId === subAccountId)?.SubAccount.name
-        } `,
+        }`,
         subaccountId: subAccountPermissions?.Permissions.find(p => p.subAccountId === subAccountId)?.SubAccount.id,
       })
     }
 
     if (response) {
       toast({
-        title: 'Success',
-        description: 'The request was successfull',
+        title: t('success'),
+        description: t('theRequestWasSuccessful'),
       })
       if (subAccountPermissions) {
         subAccountPermissions.Permissions.find(perm => {
@@ -127,8 +127,8 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
     } else {
       toast({
         variant: 'destructive',
-        title: 'Failed',
-        description: 'Could not update permissions',
+        title: t('oops'),
+        description: t('couldNotUpdatePermissions'),
       })
     }
     router.refresh()
@@ -144,23 +144,23 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
       ).forEach(async subaccount => {
         await saveActivityLogsNotification({
           agencyId: undefined,
-          description: `Updated ${userData?.name} information`,
+          description: `Updated information | ${userData?.name}`,
           subaccountId: subaccount.id,
         })
       })
 
       if (updatedUser) {
         toast({
-          title: 'Success',
-          description: 'Update User Information',
+          title: t('success'),
+          description: t('updatedUserInformation'),
         })
         setClose()
         router.refresh()
       } else {
         toast({
           variant: 'destructive',
-          title: 'Oppse!',
-          description: 'Could not update user information',
+          title: t('oops'),
+          description: t('couldNotUpdateUserInformation'),
         })
       }
     } else {
@@ -200,7 +200,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
                 <FormItem className="flex-1">
                   <FormLabel>{t('userFullName')}</FormLabel>
                   <FormControl>
-                    <Input required placeholder="Full Name" {...field} />
+                    <Input required placeholder={t('fullName')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -216,7 +216,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
                   <FormControl>
                     <Input
                       readOnly={userData?.role === 'AGENCY_OWNER' || form.formState.isSubmitting}
-                      placeholder="Email"
+                      placeholder={t('email')}
                       {...field}
                     />
                   </FormControl>
@@ -235,7 +235,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
                     disabled={field.value === 'AGENCY_OWNER'}
                     onValueChange={value => {
                       if (value === 'SUBACCOUNT_USER' || value === 'SUBACCOUNT_GUEST') {
-                        setRoleState('You need to have subaccounts to assign Subaccount access to team members.')
+                        setRoleState(t('youNeedToHaveSubAccountsToAssign'))
                       } else {
                         setRoleState('')
                       }
@@ -263,7 +263,7 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
             />
 
             <Button disabled={form.formState.isSubmitting} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Save User Details'}
+              {form.formState.isSubmitting ? <Loading /> : t('saveUserDetails')}
             </Button>
             {authUserData?.role === 'AGENCY_OWNER' && (
               <div>

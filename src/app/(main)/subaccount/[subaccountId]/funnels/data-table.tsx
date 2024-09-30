@@ -55,7 +55,7 @@ export default function FunnelsDataTable<TData, TValue>({
           onClick={() => {
             if (modalChildren)
               setOpen(
-                <CustomModal title="Create A Funnel" subheading="Funnels are a like websites, but better! Try creating one!">
+                <CustomModal title={t('createAFunnel')} subheading={t('FunnelsAreLikeWebsites')}>
                   {modalChildren}
                 </CustomModal>,
               )
@@ -82,7 +82,7 @@ export default function FunnelsDataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map(row => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                <TableRow key={row.id} data-state={row.getIsSelected() && t('selected')}>
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                   ))}

@@ -53,7 +53,7 @@ export default function DataTable<TData, TValue>({
           onClick={() => {
             if (modalChildren) {
               setOpen(
-                <CustomModal title="Add a team member" subheading="Send an invitation">
+                <CustomModal title={t('addATeamMember')} subheading={t('sendAnInvitation')}>
                   {modalChildren}
                 </CustomModal>,
               )
@@ -81,7 +81,7 @@ export default function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map(row => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                <TableRow key={row.id} data-state={row.getIsSelected() && t('selected')}>
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                   ))}

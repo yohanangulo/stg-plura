@@ -88,13 +88,13 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
       if (!response) throw new Error('No response from server')
       await saveActivityLogsNotification({
         agencyId: response.agencyId,
-        description: `${userName} | updated sub account | ${response.name}`,
+        description: `updated sub account | ${userName} -> ${response.name}`,
         subaccountId: response.id,
       })
 
       toast({
-        title: 'Subaccount details saved',
-        description: 'Successfully saved your subaccount details.',
+        title: t('subaccountDetailsSaved'),
+        description: t('successfullySavedSubaccountDetails'),
       })
 
       setClose()
@@ -102,8 +102,8 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not save sub account details.',
+        title: t('oops'),
+        description: t('couldNotSaveSubaccountDetails'),
       })
     }
   }
@@ -148,7 +148,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                   <FormItem className="flex-1">
                     <FormLabel>{t('accountName')}</FormLabel>
                     <FormControl>
-                      <Input required placeholder="Your agency name" {...field} />
+                      <Input required placeholder={t('yourAgencyName')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -162,7 +162,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                   <FormItem className="flex-1">
                     <FormLabel>{t('accountEmail')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Email" {...field} />
+                      <Input placeholder={t('email')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -178,7 +178,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                   <FormItem className="flex-1">
                     <FormLabel>{t('accountPhoneNumber')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Phone" required {...field} />
+                      <Input placeholder={t('phone')} required {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -209,7 +209,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                   <FormItem className="flex-1">
                     <FormLabel>{t('city')}</FormLabel>
                     <FormControl>
-                      <Input required placeholder="City" {...field} />
+                      <Input required placeholder={t('city')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -223,7 +223,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                   <FormItem className="flex-1">
                     <FormLabel>{t('state')}</FormLabel>
                     <FormControl>
-                      <Input required placeholder="State" {...field} />
+                      <Input required placeholder={t('state')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -237,7 +237,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                   <FormItem className="flex-1">
                     <FormLabel>{t('zipCode')}</FormLabel>
                     <FormControl>
-                      <Input required placeholder="Zipcode" {...field} />
+                      <Input required placeholder={t('zipCode')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -252,14 +252,14 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
                 <FormItem className="flex-1">
                   <FormLabel>{t('country')}</FormLabel>
                   <FormControl>
-                    <Input required placeholder="Country" {...field} />
+                    <Input required placeholder={t('country')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? <Loading /> : 'Save Account Information'}
+              {isLoading ? <Loading /> : t('saveAccountInformation')}
             </Button>
           </form>
         </Form>

@@ -245,7 +245,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                             </TableCell>
                           </TableRow>
                         ))
-                      : 'No Data'}
+                      : t('noData')}
                   </TableBody>
                 </Table>
               </CardHeader>

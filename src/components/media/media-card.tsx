@@ -61,14 +61,14 @@ const MediaCard = ({ file }: Props) => {
               className="flex gap-2"
               onClick={() => {
                 navigator.clipboard.writeText(file.link)
-                toast({ title: 'Copied To Clipboard' })
+                toast({ title: t('copiedToClipboard') })
               }}
             >
               <Copy size={15} /> {t('copyImageLink')}
             </DropdownMenuItem>
             <AlertDialogTrigger asChild>
               <DropdownMenuItem className="flex gap-2">
-                <Trash size={15} /> {'deleteFile'}
+                <Trash size={15} /> {t('deleteFile')}
               </DropdownMenuItem>
             </AlertDialogTrigger>
           </DropdownMenuContent>
@@ -93,8 +93,8 @@ const MediaCard = ({ file }: Props) => {
                 subaccountId: response.subAccountId,
               })
               toast({
-                title: 'Deleted File',
-                description: 'Successfully deleted the file',
+                title: t('deletedFile'),
+                description: t('successfullyDeleted'),
               })
               setLoading(false)
               router.refresh()

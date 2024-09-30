@@ -17,7 +17,7 @@ const CraeteContactButton = ({ subaccountId }: Props) => {
 
   const handleCreateContact = async () => {
     setOpen(
-      <CustomModal title="Create Or Update Contact information" subheading="Contacts are like customers.">
+      <CustomModal title={t('createOrUpdateContactInformation')} subheading={t('contactsAreLikeCustomers')}>
         <ContactUserForm subaccountId={subaccountId} />
       </CustomModal>,
     )

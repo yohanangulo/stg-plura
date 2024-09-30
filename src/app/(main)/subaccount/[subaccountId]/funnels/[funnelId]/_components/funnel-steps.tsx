@@ -70,16 +70,16 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
         console.log(error)
         toast({
           variant: 'destructive',
-          title: 'Failed',
-          description: 'Could not save page order',
+          title: t('failed'),
+          description: t('couldNotSavePageOrder'),
         })
         return
       }
     })
 
     toast({
-      title: 'Success',
-      description: 'Saved page order',
+      title: t('success'),
+      description: t('savedPageOrder'),
     })
   }
 
@@ -114,10 +114,7 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
             className="mt-4 w-full"
             onClick={() => {
               setOpen(
-                <CustomModal
-                  title=" Create or Update a Funnel Page"
-                  subheading="Funnel Pages allow you to create step by step processes for customers to follow"
-                >
+                <CustomModal title={t('createOrUpdateFunnelPage')} subheading={t('createOrUpdateFunnelPageDesc')}>
                   <CreateFunnelPage subaccountId={subaccountId} funnelId={funnelId} order={pagesState.length} />
                 </CustomModal>,
               )

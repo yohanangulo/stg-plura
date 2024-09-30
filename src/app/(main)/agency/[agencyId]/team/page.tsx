@@ -51,7 +51,7 @@ const TeamPage = async ({ params }: Props) => {
       filterValue="name"
       columns={columns}
       data={teamMembers}
-    ></DataTable>
+    />
   )
 }
 

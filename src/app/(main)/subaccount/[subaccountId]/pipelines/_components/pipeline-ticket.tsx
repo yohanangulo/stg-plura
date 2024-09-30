@@ -61,7 +61,7 @@ const PipelineTicket = ({ allTickets, index, setAllTickets, subaccountId, ticket
 
   const handleClickEdit = async () => {
     setOpen(
-      <CustomModal title="Update Ticket Details" subheading="">
+      <CustomModal title={t('updateTicketDetails')} subheading="">
         <TicketForm getNewTicket={editNewTicket} laneId={ticket.laneId} subaccountId={subaccountId} />
       </CustomModal>,
       async () => {
@@ -75,8 +75,8 @@ const PipelineTicket = ({ allTickets, index, setAllTickets, subaccountId, ticket
       setAllTickets(tickets => tickets.filter(t => t.id !== ticket.id))
       const response = await deleteTicket(ticket.id)
       toast({
-        title: 'Deleted',
-        description: 'Deleted ticket from lane.',
+        title: t('deleted'),
+        description: t('deletedTicketFromLane'),
       })
 
       await saveActivityLogsNotification({
@@ -89,8 +89,8 @@ const PipelineTicket = ({ allTickets, index, setAllTickets, subaccountId, ticket
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not delete the ticket.',
+        title: t('oops'),
+        description: t('couldNotDeleteTicket'),
       })
       console.log(error)
     }
@@ -170,7 +170,7 @@ const PipelineTicket = ({ allTickets, index, setAllTickets, subaccountId, ticket
                       </Avatar>
                       <div className="flex flex-col justify-center">
                         <span className="text-sm text-muted-foreground">
-                          {ticket.assignedUserId ? 'Assigned to' : 'Not Assigned'}
+                          {ticket.assignedUserId ? t('assignTo') : t('notAssigned')}
                         </span>
                         {ticket.assignedUserId && (
                           <span className="text-xs w-28  overflow-ellipsis overflow-hidden whitespace-nowrap text-muted-foreground">
