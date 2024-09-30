@@ -3,6 +3,7 @@ import SubscriptionFormWrapper from '@/components/forms/subscription-form/subscr
 import CustomModal from '@/components/global/custom-modal'
 import { PricesList } from '@/lib/types'
 import { useModal } from '@/providers/modal-provider'
+import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 
@@ -13,6 +14,8 @@ type Props = {
 }
 
 const SubscriptionHelper = ({ customerId, planExists, prices }: Props) => {
+  const t = useTranslations()
+
   const { setOpen } = useModal()
   const searchParams = useSearchParams()
   const plan = searchParams.get('plan')
@@ -20,7 +23,7 @@ const SubscriptionHelper = ({ customerId, planExists, prices }: Props) => {
   useEffect(() => {
     if (plan)
       setOpen(
-        <CustomModal title="Upgrade Plan!" subheading="Get started today to get access to premium features">
+        <CustomModal title={t('upgradeYourPlan')} subheading={t('upgradeYourPlanSubHeading')}>
           <SubscriptionFormWrapper planExists={planExists} customerId={customerId} />
         </CustomModal>,
         async () => ({

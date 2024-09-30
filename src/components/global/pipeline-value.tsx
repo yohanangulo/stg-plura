@@ -77,7 +77,7 @@ const PipelineValue = ({ subaccountId }: Props) => {
         <p className="mb-2">{t('totalValueOfAllTickets')}</p>
         <Select value={selectedPipelineId} onValueChange={setselectedPipelineId}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a pipeline" />
+            <SelectValue placeholder={t('selectAPipeline')} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>

@@ -84,7 +84,7 @@ const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, 
                 <CommandList className="pb-16">
                   <CommandEmpty>{t('noResultsFound')}</CommandEmpty>
                   {(user?.role === 'AGENCY_OWNER' || user?.role === 'AGENCY_ADMIN') && user?.Agency && (
-                    <CommandGroup heading="Agency">
+                    <CommandGroup heading={t('agency')}>
                       <CommandItem className="!bg-transparent my-2 text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
                         {defaultOpen ? (
                           <Link href={`/agency/${user?.Agency?.id}`} className="flex gap-4 w-full h-full">
@@ -122,7 +122,7 @@ const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, 
                       </CommandItem>
                     </CommandGroup>
                   )}
-                  <CommandGroup heading="Accounts">
+                  <CommandGroup heading={t('accounts')}>
                     {!!subAccounts
                       ? subAccounts.map(subaccount => (
                           <CommandItem key={subaccount.id}>
@@ -161,7 +161,7 @@ const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, 
                             )}
                           </CommandItem>
                         ))
-                      : 'No Accounts'}
+                      : t('noAccounts')}
                   </CommandGroup>
                 </CommandList>
                 {(user?.role === 'AGENCY_OWNER' || user?.role === 'AGENCY_ADMIN') && (
@@ -170,10 +170,7 @@ const MenuOptions = ({ details, id, sidebarLogo, sidebarOpt, subAccounts, user, 
                       className="w-full flex gap-2"
                       onClick={() => {
                         setOpen(
-                          <CustomModal
-                            title="Create A Subaccount"
-                            subheading="You can switch between your agency account and the subaccount from the sidebar"
-                          >
+                          <CustomModal title={t('createSubaccount')} subheading={t('youCanSwitchBet')}>
                             <SubAccountDetails
                               agencyDetails={user?.Agency as Agency}
                               userId={user?.id as string}

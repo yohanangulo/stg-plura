@@ -41,19 +41,19 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
       const res = await sendInvitation(values.role, values.email, agencyId)
       await saveActivityLogsNotification({
         agencyId: agencyId,
-        description: `Invited ${res.email}`,
+        description: `Invited | ${res.email}`,
         subaccountId: undefined,
       })
       toast({
-        title: 'Success',
-        description: 'Created and sent invitation',
+        title: t('success'),
+        description: t('createdAndSentInvitation'),
       })
     } catch (error) {
       console.log(error)
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not send invitation',
+        title: t('oops'),
+        description: t('couldNotSendInvitation'),
       })
     }
   }
@@ -75,7 +75,7 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
                 <FormItem className="flex-1">
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Email" {...field} />
+                    <Input placeholder={t('email')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,7 +105,7 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
               )}
             />
             <Button disabled={form.formState.isSubmitting} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Send Invitation'}
+              {form.formState.isSubmitting ? <Loading /> : t('sendInvitation')}
             </Button>
           </form>
         </Form>

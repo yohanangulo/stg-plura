@@ -67,16 +67,16 @@ const LaneForm: React.FC<CreateLaneFormProps> = ({ defaultData, pipelineId }) =>
       })
 
       toast({
-        title: 'Success',
-        description: 'Saved pipeline details',
+        title: t('success'),
+        description: t('savedPipelineDetails'),
       })
 
       router.refresh()
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not save pipeline details',
+        title: t('oops'),
+        description: t('couldNotSavePipelineDetails'),
       })
     }
     setClose()
@@ -97,7 +97,7 @@ const LaneForm: React.FC<CreateLaneFormProps> = ({ defaultData, pipelineId }) =>
                 <FormItem>
                   <FormLabel>{t('laneName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Lane Name" {...field} />
+                    <Input placeholder={t('laneName')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,7 +105,7 @@ const LaneForm: React.FC<CreateLaneFormProps> = ({ defaultData, pipelineId }) =>
             />
 
             <Button className="w-20 mt-4" disabled={isLoading} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Save'}
+              {form.formState.isSubmitting ? <Loading /> : t('save')}
             </Button>
           </form>
         </Form>

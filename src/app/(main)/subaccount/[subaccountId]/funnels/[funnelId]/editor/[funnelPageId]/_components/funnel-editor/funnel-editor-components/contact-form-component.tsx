@@ -10,6 +10,7 @@ import { ContactUserFormSchema } from '@/lib/types'
 import { EditorElement, useEditor } from '@/providers/editor/editor-provider'
 import clsx from 'clsx'
 import { Trash } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 import React from 'react'
@@ -20,6 +21,8 @@ type Props = {
 }
 
 const ContactFormComponent = (props: Props) => {
+  const t = useTranslations()
+
   const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor()
   const router = useRouter()
 
@@ -75,15 +78,15 @@ const ContactFormComponent = (props: Props) => {
         subaccountId: subaccountId,
       })
       toast({
-        title: 'Success',
-        description: 'Successfully Saved your info',
+        title: t('success'),
+        description: t('successfullySavedYourInformation'),
       })
       await goToNextPage()
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Failed',
-        description: 'Could not save your information',
+        title: t('failed'),
+        description: t('couldNotSaveYourInformation'),
       })
     }
   }
@@ -104,7 +107,7 @@ const ContactFormComponent = (props: Props) => {
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
         <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg ">{state.editor.selectedElement.name}</Badge>
       )}
-      <ContactForm subTitle="Contact Us" title="Want a free quote? We can help you" apiCall={onFormSubmit} />
+      <ContactForm subTitle={t('contactUs')} title={t('wantAFreeQuote')} apiCall={onFormSubmit} />
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
         <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
           <Trash className="cursor-pointer" size={16} onClick={handleDeleteElement} />

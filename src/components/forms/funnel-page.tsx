@@ -71,16 +71,16 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
       })
 
       toast({
-        title: 'Success',
-        description: 'Saves Funnel Page Details',
+        title: t('success'),
+        description: t('savedFunnelPageDetails'),
       })
       router.refresh()
     } catch (error) {
       console.log(error)
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could Save Funnel Page Details',
+        title: t('oops'),
+        description: t('couldNotSaveFunnelPageDetails'),
       })
     }
   }
@@ -102,7 +102,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
                 <FormItem className="flex-1">
                   <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Name" {...field} />
+                    <Input placeholder={t('name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,7 +116,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
                 <FormItem className="flex-1">
                   <FormLabel>{t('pathName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Path for the page" {...field} value={field.value?.toLowerCase()} />
+                    <Input placeholder={t('pathForThePage')} {...field} value={field.value?.toLowerCase()} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -124,7 +124,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
             />
             <div className="flex items-center gap-2">
               <Button className="w-22 self-end" disabled={form.formState.isSubmitting} type="submit">
-                {form.formState.isSubmitting ? <Loading /> : 'Save Page'}
+                {form.formState.isSubmitting ? <Loading /> : t('savePage')}
               </Button>
 
               {defaultData?.id && (
@@ -170,8 +170,8 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, funnel
                       funnelId,
                     )
                     toast({
-                      title: 'Success',
-                      description: 'Saves Funnel Page Details',
+                      title: t('success'),
+                      description: t('savedFunnelPageDetails'),
                     })
                     router.refresh()
                   }}

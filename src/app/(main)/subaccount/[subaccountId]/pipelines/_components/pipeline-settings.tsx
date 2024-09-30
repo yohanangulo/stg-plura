@@ -52,15 +52,15 @@ const PipelineSettings = ({
                     await deletePipeline(pipelineId)
                     //Challenge: Activity log
                     toast({
-                      title: 'Deleted',
-                      description: 'Pipeline is deleted',
+                      title: t('deleted'),
+                      description: t('pipelineIsDelete'),
                     })
                     router.replace(`/subaccount/${subaccountId}/pipelines`)
                   } catch (error) {
                     toast({
                       variant: 'destructive',
-                      title: 'Oppse!',
-                      description: 'Could Delete Pipeline',
+                      title: t('oops'),
+                      description: t('couldntDetelePipeline'),
                     })
                   }
                 }}

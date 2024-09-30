@@ -71,14 +71,14 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
     })
     if (response)
       toast({
-        title: 'Success',
-        description: 'Saved funnel details',
+        title: t('success'),
+        description: t('savedFunnelDetails'),
       })
     else
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not save funnel details',
+        title: t('oops'),
+        description: t('couldNotSaveFunnelDetails'),
       })
     setClose()
     router.refresh()
@@ -99,7 +99,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
                 <FormItem>
                   <FormLabel>{t('funnelName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Name" {...field} />
+                    <Input placeholder={t('name')} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -112,7 +112,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
                 <FormItem>
                   <FormLabel>{t('funnelDescription')}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Tell us a little bit more about this funnel." {...field} />
+                    <Textarea placeholder={t('tellUsAboutYourFunnel')} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -125,7 +125,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
                 <FormItem>
                   <FormLabel>{t('subDomain')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Sub domain for funnel" {...field} />
+                    <Input placeholder={t('subDomainForAFunnel')} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -145,7 +145,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
               )}
             />
             <Button className="w-20 mt-4" disabled={isLoading} type="submit">
-              {form.formState.isSubmitting ? <Loading /> : 'Save'}
+              {form.formState.isSubmitting ? <Loading /> : t('save')}
             </Button>
           </form>
         </Form>

@@ -72,14 +72,14 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
     if (!value) {
       toast({
         variant: 'destructive',
-        title: 'Tags need to have a name',
+        title: t('tagsNeedToHaveAName'),
       })
       return
     }
     if (!selectedColor) {
       toast({
         variant: 'destructive',
-        title: 'Please Select a color',
+        title: t('pleaseSelectAColor'),
       })
       return
     }
@@ -98,7 +98,7 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
     try {
       const response = await upsertTag(subAccountId, tagData)
       toast({
-        title: 'Created the tag',
+        title: t('createdTheTag'),
       })
 
       await saveActivityLogsNotification({
@@ -109,7 +109,7 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Could not create tag',
+        title: t('couldNotCreateTag'),
       })
     }
   }
@@ -124,8 +124,8 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
     try {
       const response = await deleteTag(tagId)
       toast({
-        title: 'Deleted tag',
-        description: 'The tag is deleted from your subaccount.',
+        title: t('deletedTag'),
+        description: t('theTagIsDeletedFromYourSubaccount'),
       })
 
       await saveActivityLogsNotification({
@@ -138,7 +138,7 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Could not delete tag',
+        title: t('couldNotDeleteTag'),
       })
     }
   }

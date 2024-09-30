@@ -77,7 +77,7 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
 
   const handleCreateTicket = () => {
     setOpen(
-      <CustomModal title="Create A Ticket" subheading="Tickets are a great way to keep track of tasks">
+      <CustomModal title={t('createATicket')} subheading={t('createATicketDesc')}>
         <TicketForm getNewTicket={addNewTicket} laneId={laneDetails.id} subaccountId={subaccountId} />
       </CustomModal>,
     )
@@ -85,7 +85,7 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
 
   const handleEditLane = () => {
     setOpen(
-      <CustomModal title="Edit Lane Details" subheading="">
+      <CustomModal title={t('editLaneDetails')} subheading="">
         <CreateLaneForm pipelineId={pipelineId} defaultData={laneDetails} />
       </CustomModal>,
     )

@@ -61,8 +61,8 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
       })
       if (planExists) {
         toast({
-          title: 'Success',
-          description: 'Your plan has been successfully upgraded!',
+          title: t('success'),
+          description: t('yourPlanHasBeenUpdated'),
         })
         setClose()
         router.refresh()
